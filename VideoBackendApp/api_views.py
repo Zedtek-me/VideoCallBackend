@@ -16,8 +16,8 @@ def get_user_details(request, pk): #to get the user details for frontend--> expe
             return Response(serialized_user.data, status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({'no user': 'the user doesn\'t exist'}, status=status.HTTP_404_NOT_FOUND)
-    print(request.data)
-    data= UserSerializer(data=request.POST)
+    print(request.query_params)
+    data= UserSerializer(data=request.query_params)
     if data.is_valid():
         data.save()
         return Response(data.data, status.HTTP_201_CREATED)
