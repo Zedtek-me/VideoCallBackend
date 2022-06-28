@@ -12,12 +12,14 @@ from django.contrib.auth import authenticate, login, logout
 # login view
 @api_view(['POST'])
 def authen_ticate(request): #to get the user details in the db for auths.--> expects POST request
-    print(request.query_params)
+    data= json.loads(request.body)
+    print(data)
     # user= User.videocon.get(email= request.query_params.get('email'))
-    user= authenticate(request.query_params)
+    user= authenticate(**data)
     if user:
         login(request, user)#logs in a user on this server if the authenticate func returns a user instance
         serialized_user= UserSerializer(user)
+        print(request.user)
         return Response(serialized_user.data, status.HTTP_200_OK)
     return Response({'no_user': 'the user doesn\'t exist'}, status=status.HTTP_404_NOT_FOUND)
 
