@@ -15,11 +15,11 @@
             <img src="" alt="Logo" id="logo">
             <nav class="nav">
                 <ul class="nav-ul">
-                    <li><a href="{%url 'dashboard'%}">Dashboard</a></li>
-                    <li><a href="{%url 'meeting room'%}">Meeting Room</a></li>
-                    {%block signup%}<li><a href="{%url 'backend signup'%}">Sign Up</a></li>{%endblock%}
-                    {%block login%}<li><a href="{%url 'home page'%}">Login</a></li>{%endblock%}
-                    <li><a href="{%url 'logout'%}">Log out</a></li>
+                    <li><a href="{%url 'dashboard'%}">Dashboard</a> <hr></li>
+                    <li><a href="{%url 'meeting room'%}">Meeting Room</a><hr></li>
+                    {%block signup%}<li><a href="{%url 'backend signup'%}">Sign Up</a><hr></li>{%endblock%}
+                    {%block login%}<li><a href="{%url 'home page'%}">Login</a><hr></li>{%endblock%}
+                    <li><a href="{%url 'logout'%}">Log out</a><hr></li>
                     {%block mobile-settings%}<li><a href="{%url 'profile settings'%}">Settings</a></li>{%endblock%} <!-- display settings on dashboard and rooms only-->
                 </ul>
             </nav>
@@ -30,7 +30,7 @@
                 <div></div>
             </div>
             <nav class="mobile-nav m-nav">
-                <ul class="nav-ul">
+                <ul class="mobile-nav-ul">
                     <li><a href=""> Home</a></li>
                     <li><a href="{%url 'dashboard'%}">Dashboard</a></li>
                     <li><a href="{%url 'meeting room'%}">Meeting Room</a></li>
@@ -38,9 +38,11 @@
                 </ul>
             </nav>
         </header>
-        {%block content%}
-        <!-- custom contents -->
-        {%endblock%}
+        <div class="body-contents">
+            {%block content%}
+            <!-- custom contents -->
+            {%endblock%}
+        </div>
     </body>
     <script src="../../static/videobackend/js/index.js"></script>
     <footer>
