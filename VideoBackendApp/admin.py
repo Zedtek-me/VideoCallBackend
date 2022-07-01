@@ -5,5 +5,5 @@ from .models import User
 class UserAdmin(admin.ModelAdmin):
     list_display= ('name', 'surname', 'date_joined')
     list_filter= ['date_joined','username']
-    fields= ('name','surname','username', 'email', 'password')
+    fields= ('name','surname','username', 'email', 'password', 'profile_picture')
 admin.site.register(User, UserAdmin)
