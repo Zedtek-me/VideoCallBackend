@@ -58,12 +58,12 @@ html{
 }
 /* mobile navs */
 .hamburger{
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(7, 175, 7);
     cursor: pointer;
+    z-index: 100;
 }
 
 .hamburger >div{
@@ -73,12 +73,24 @@ html{
     margin: 1px;
 }
 
+.m-nav{/*what to toggle when the hamburger is clicked*/
+    left: 30%;
+}
+.mobile-nav{/*parent cont for mobile ul*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 100%;
+    bottom: -50%;
+    transition: all 0.3s ease-in-out;
+}
+
 .mobile-nav-ul{
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: yellowgreen;
-    list-style: none;
+    list-style: none;    
 }
 
 .mobile-nav-ul li > a{
@@ -94,7 +106,7 @@ html{
     border-radius: 15px;
     padding: 5px;
 }
-.nav-ul li > a~hr{
+.nav-ul li > a~hr{/*trying to animate the horizontals below each link*/
     display: none;
 }
 .nav-ul li > a~hr:hover{
@@ -191,6 +203,7 @@ label>*{
     padding: 8px;
     border-radius: 15px;
     color: white;
+    cursor: pointer;
 }
 
 .login-div form button:hover{
@@ -207,8 +220,8 @@ footer, .footer-cont{
     text-align: center;
     background-color: rgb(20, 20, 20);
     color: white;
-    width: 20%;
-    padding: 5%;
+    width: 100%;
+    padding:15px;
     /* margin-top: 10%; */
     flex: 1 1 auto;
 }
@@ -234,5 +247,15 @@ footer, .footer-cont{
         display: inline;
         width: 4px;
         /* background-color: white; */
+    }
+}
+
+
+@media screen and(max-width:800px){
+    .hamburger{display: flex;
+    }
+
+    .nav, .nav-ul{
+        display: none;
     }
 }

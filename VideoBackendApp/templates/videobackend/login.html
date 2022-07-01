@@ -2,9 +2,18 @@
 {%load static%}
 {%block settings%}{%endblock%}
 {%block mobile-settings%}{%endblock%}
+{%block logout%}{%endblock%}
+{%block dashboard%}{%endblock%}
+{%block meeting%}{%endblock%}
+{%block login%}{%endblock%}
 
 {%block content%}
 <div class="login-div">
+    {%if msgs%}
+        {%for msg in msgs%}
+            <div class="msg{%if msg.tags%} {{msg.tags}}{%endif%}">{{msg}}</div>
+        {%endfor%}
+    {%endif%}
     <p id="login-hi">Hi</p>
     <form action="" method="post">
         <div class="opac-bg"></div>
@@ -14,7 +23,7 @@
         </label>
 
         <label for="Password">
-            Password: <input type="password" inputmode="password" name="password">
+            Password: <input type="password" inputmode="password" name="password" autocomplete="none">
         </label>
         <button type="submit" id="login-btn">Login in</button>
     </form>

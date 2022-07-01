@@ -2,9 +2,18 @@
 {%load static%}
 {%block settings%}{%endblock%}
 {%block mobile-settings%}{%endblock%}
+{%block signup%}{%endblock%}
+{%block logout%}{%endblock%}
+{%block dashboard%}{%endblock%}
+{%block meeting%}{%endblock%}
 
 {%block content%}
 <div class="login-div signup-div">
+    {%if msgs%}
+        {%for msg in msgs%}
+            <div class="msg{%if msg.tags%} {{msg.tags}}{%endif%}">{{msg}}</div>
+        {%endfor%}
+    {%endif%}
     <p id="login-hi">Hi</p>
     <form action="" method="post">
         <div class="opac-bg"></div>
@@ -22,7 +31,7 @@
         </label>
         
         <label for="Password">
-            Password: <input type="password" inputmode="password" name="password1">
+            Password: <input type="password" inputmode="password" name="password1" autocomplete="none">
             <p id="pass-hint">
                 <ul id="pass-hint-ul">
                     <li>your password must contain at least 6 characters</li>
@@ -34,7 +43,7 @@
         </label>
 
         <label for="Password">
-            Re-type Password: <input type="password" inputmode="password" name="password2" placeholder="same as the one above">
+            Re-type Password: <input type="password" inputmode="password" name="password2" placeholder="same as the one above" autocomplete="none">
         </label>
         <button type="submit" id="signup-btn">Sign up</button>
     </form>

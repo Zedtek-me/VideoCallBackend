@@ -15,11 +15,11 @@
             <img src="" alt="Logo" id="logo">
             <nav class="nav">
                 <ul class="nav-ul">
-                    <li><a href="{%url 'dashboard'%}">Dashboard</a> <hr></li>
-                    <li><a href="{%url 'meeting room'%}">Meeting Room</a><hr></li>
+                    {%block dashboard%}<li><a href="{%url 'dashboard'%}">Dashboard</a> <hr></li>{%endblock%}
+                    {%block meeting%}<li><a href="{%url 'meeting room'%}">Meeting Room</a><hr></li>{%endblock%}
                     {%block signup%}<li><a href="{%url 'backend signup'%}">Sign Up</a><hr></li>{%endblock%}
                     {%block login%}<li><a href="{%url 'home page'%}">Login</a><hr></li>{%endblock%}
-                    <li><a href="{%url 'logout'%}">Log out</a><hr></li>
+                    {%block logout%}<li><a href="{%url 'logout'%}">Log out</a><hr></li>{%endblock%}
                     {%block mobile-settings%}<li><a href="{%url 'profile settings'%}">Settings</a></li>{%endblock%} <!-- display settings on dashboard and rooms only-->
                 </ul>
             </nav>
