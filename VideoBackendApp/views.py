@@ -10,7 +10,9 @@ def home(request):
     # returns the dashboard if login successful
     if request.method == 'POST':
         data= request.POST
-        user= authenticate(request, **data)
+        email= data.get('email')
+        password= data.get('password')
+        user= authenticate(request, email= email, password=password)
         if user:
             login(request, user)
             messages.success(request, 'welcome %s!' %user)
@@ -30,17 +32,27 @@ def signup(request):
         messages.error(request, 'Your passwords didn\'t match; check them well.')
         return('signup')
     # get requests return the signup page
-    return render(request, 'signup.html', context={})
+    msgs=messages.get_messages(request)
+    return render(request, 'signup.html', context={'msgs':msgs})
 
+@login_required(login_url='home page')
 def dashboard(request):
     user = request.user
-    return render(request, 'dashboard.html', context={'user': user})
+    msgs=messages.get_messages(request)
+    return render(request, 'dashboard.html', context={'user': user, 'msgs':msgs})
 
+@login_required(login_url='home page')
 def setting(request):
     user = request.user
-    return render(request, 'settings.html', context={'user': user}, content_type='text/html')
+    msgs=messages.get_messages(request)
+    return render(request, 'settings.html', context={'user': user, 'msgs':msgs}, content_type='text/html')
 
+@login_required(login_url='home page')
 def meeting(request):
     user = request.user
-    return render(request, 'meeting_room.html', context={'user': user}, content_type='text/html')
+    msgs=messages.get_messages(request)
+    return render(request, 'meeting_room.html', context={'user': user, 'msgs':msgs}, content_type='text/html')
 
+def log_out(request):
+    logout(request)
+    return redirect('home page')

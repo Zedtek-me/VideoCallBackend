@@ -13,10 +13,10 @@ urlpatterns= [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('settings/', views.setting, name='profile settings'),
     path('meeting_room/', views.meeting, name='meeting room'),
-    path('signup/', views.signup, name='signup'),
+    path('sign_up/', views.signup, name='backend signup'),
     path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
+    path('logout/', views.log_out, name='logout'),
 ]
 
 if settings.DEBUG:
-    urlpatterns+=static(settings.MEDIA_ULR, document_root=settings.MEDIA_ROOT)
+    urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

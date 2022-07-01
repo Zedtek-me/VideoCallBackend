@@ -4,9 +4,10 @@
 {%block mobile-settings%}{%endblock%}
 
 {%block content%}
-<div class="login-div">
+<div class="login-div signup-div">
     <p id="login-hi">Hi</p>
     <form action="" method="post">
+        <div class="opac-bg"></div>
         {%csrf_token%}
         <label for="Email">
             Email: <input type="email" inputmode="email" name="email" placeholder="your name, e.g: Jack">
@@ -33,7 +34,7 @@
         </label>
 
         <label for="Password">
-            Re-type Password: <input type="password" inputmode="password" name="password2">
+            Re-type Password: <input type="password" inputmode="password" name="password2" placeholder="same as the one above">
         </label>
         <button type="submit" id="signup-btn">Sign up</button>
     </form>

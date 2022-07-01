@@ -45,3 +45,78 @@
     text-decoration: none;
     color:white;
 }
+/* login and signup forms start here */
+.login-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-image: url('');
+}
+
+#login-hi{
+    align-self: flex-start;
+    text-align: center;
+}
+
+.login-div form{/*styles apply to both login and logout forms; they share similar classes, exccept that signup has 'signup' class*/
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    width: 50%;
+    border-radius: 8px;
+    border: solid 1px black;
+    padding: 15px;
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+/* found in the forms to give the forms some nice looks */
+.opac-bg{
+    background-image: (linear-gradient(to right, black, white));
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.login-div form >label{
+    display: flex;
+    flex-flow: row wrap;
+    place-items: center;
+    margin: 8px;
+    width: 100%;
+    z-index: 100;
+}
+
+label>*{
+    margin: 5px;
+}
+
+.login-div form label >input{
+    padding: 8px;
+    width: 80%;
+    height: 5%;
+    border:none;
+    border-radius:10px;
+    background-color: rgb(212, 228, 233);
+    color: black;
+}
+button{
+    border:solid 2px yellow;
+    background-color: rgb(7, 175, 7);
+    transition: all 0.5s ease-in;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 15px;
+    color: white;
+}
+
+button:hover{
+    background-color: greenyellow;
+}

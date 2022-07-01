@@ -7,6 +7,7 @@
 <div class="login-div">
     <p id="login-hi">Hi</p>
     <form action="" method="post">
+        <div class="opac-bg"></div>
         {%csrf_token%}
         <label for="Email">
             Email: <input type="email" inputmode="email" name="email">
@@ -15,7 +16,7 @@
         <label for="Password">
             Password: <input type="password" inputmode="password" name="password">
         </label>
-        <button type="submit" id="login-btn">login up</button>
+        <button type="submit" id="login-btn">Login in</button>
     </form>
 </div>
 {%endblock%}
