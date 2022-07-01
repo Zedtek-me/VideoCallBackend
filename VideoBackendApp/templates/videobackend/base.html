@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            {%block title%}base template {%endblock%}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible">
+        <meta name="Description" content="video confrencing application built by zedtek">
+        <link rel="stylesheet" href="../../static/videobackend/css/index.css" type="text/css">
+        <link rel="icon" href="../../static/videobackend/img/" type="image/*">
+    </head>
+    <body>
+        <header class="header">
+            <img src="" alt="Logo" id="logo">
+            <nav class="nav">
+                <ul class="nav-ul">
+                    <li><a href=""> Home</a></li>
+                    <li><a href="{%url 'dashboard'%}">Dashboard</a></li>
+                    <li><a href="{%url 'meeting room'%}">Meeting Room</a></li>
+                    {%block mobile-settings%}<li><a href="{%url 'profile settings'%}">Settings</a></li>{%endblock%} <!-- display settings on dashboard and rooms only-->
+                </ul>
+            </nav>
+            <!-- mobile nav -->
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <nav class="mobile-nav m-nav">
+                <ul class="nav-ul">
+                    <li><a href=""> Home</a></li>
+                    <li><a href="{%url 'dashboard'%}">Dashboard</a></li>
+                    <li><a href="{%url 'meeting room'%}">Meeting Room</a></li>
+                    {%block settings%}<li><a href="{%url 'profile settings'%}">Settings</a></li>{%endblock%}
+                </ul>
+            </nav>
+        </header>
+        {%block content%}
+        <!-- custom contents -->
+        {%endblock%}
+    </body>
+    <script src="../../static/videobackend/js/index.js"></script>
+    <footer>
+        <div class="footer-cont">
+            <p id="c-right">Copyright 2022</p>
+        </div>
+    </footer>
+</html>

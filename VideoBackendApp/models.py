@@ -92,3 +92,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering=('email',)
+
+
+# other tables start here
