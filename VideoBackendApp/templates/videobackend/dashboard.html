@@ -1,6 +1,18 @@
 {%extends 'base.html'%}
+{%block title%} Dashboard {%endblock%}
 {%load static%}
+{%block login%}{%endblock%}
+{%block signup%}{%endblock%}
+
+
 
 {%block content%}
-
+    <div class="dashboard-cont">
+        <!-- flash msgs -->
+        {%if msgs%}
+            {%for msg in msgs%}
+                <div class="msg{%if msg.tags%} {{msg.tags}}{%endif%}" title="my username">{{msg}}</div>
+            {%endfor%}
+        {%endif%}
+    </div>
 {%endblock%}

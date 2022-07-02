@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {%load static%}
+{%block title%} Login {%endblock%}
 {%block settings%}{%endblock%}
 {%block mobile-settings%}{%endblock%}
 {%block logout%}{%endblock%}
@@ -15,7 +16,7 @@
         {%endfor%}
     {%endif%}
     <p id="login-hi">Hi</p>
-    <form action="{%url 'login'%}" method="post">
+    <form action="{%url 'home page'%}" method="post">
         <div class="opac-bg"></div>
         {%csrf_token%}
         <label for="Email">

@@ -43,7 +43,8 @@ html{
 
 .nav, .nav-ul{
     display: flex;
-    place-items: space-between;
+    justify-content: space-between;
+    align-items: center;
     list-style: none;
 }
 
@@ -55,6 +56,15 @@ html{
     text-decoration: none;
     color:white;
     transition: all 0.3s linear;
+}
+.user-name{
+    background-color: yellowgreen;
+    color: black;
+    border: solid 2px white;
+    border-radius: 15px;
+    padding: 5px;
+    justify-self: flex-end;
+    margin-left:10px;
 }
 /* mobile navs */
 .hamburger{
@@ -189,7 +199,7 @@ label.pass-hint{/*password container with the pass-cont and pass-hint paragraph*
     line-height: 0.6cm;
 }
 /* found in the forms to give the forms some nice looks */
-.opac-bg{
+form div.opac-bg{
     background-image: (linear-gradient(to right, rgba(black, black, black, 1), rgba(white, white, white, 0.5)));
     position: absolute;
     top: 0;
@@ -272,11 +282,39 @@ footer, .footer-cont{
     to{
         display: inline;
         width: 4px;
-        /* background-color: white; */
     }
 }
 
+/* flash colors */
+.error{
+    background-color: red;
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+    padding:5px;
+}
 
+.success{
+    background-color:rgb(120, 175, 37);
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+    padding:5px;
+}
+
+.info{
+    background-color: rgb(238, 201, 157);
+    color:black;
+    text-align: center;
+    border-radius: 15px;
+    padding:5px;
+}
+
+/* dashborad stylings here */
+
+.dashboard-cont{
+    margin-top: 10%;
+}
 @media screen and(max-width:800px){
     .hamburger{display: flex;
     }

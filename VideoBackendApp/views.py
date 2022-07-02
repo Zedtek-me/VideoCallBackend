@@ -18,7 +18,7 @@ def home(request):
             messages.success(request, 'welcome %s!' %user)
             return redirect('dashboard')
         messages.error(request, 'Email or Password is wrong! Note: they might be case sensitive')
-        return redirect('homoe page')
+        return redirect('home page')
     # take user straight to dashboard if user is authenticated
     if request.user.is_authenticated:
         return redirect('dashboard')
