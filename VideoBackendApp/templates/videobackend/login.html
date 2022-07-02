@@ -15,15 +15,15 @@
         {%endfor%}
     {%endif%}
     <p id="login-hi">Hi</p>
-    <form action="" method="post">
+    <form action="{%url 'login'%}" method="post">
         <div class="opac-bg"></div>
         {%csrf_token%}
         <label for="Email">
-            Email: <input type="email" inputmode="email" name="email">
+            Email: <input type="email" inputmode="email" name="email" required>
         </label>
 
         <label for="Password">
-            Password: <input type="password" inputmode="password" name="password" autocomplete="none">
+            Password: <input type="password" inputmode="password" name="password" autocomplete="none" required>
         </label>
         <button type="submit" id="login-btn">Login in</button>
     </form>

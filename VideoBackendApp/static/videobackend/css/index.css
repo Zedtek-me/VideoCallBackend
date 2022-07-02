@@ -151,7 +151,8 @@ html{
 .login-div form{/*styles apply to both login and logout forms; they share similar classes, exccept that signup has 'signup' class*/
     display: flex;
     flex-direction: column;
-    place-items: center;
+    justify-content: center;
+    align-items: center;
     width: 80%;
     border-radius: 8px;
     border: solid 1px black;
@@ -162,7 +163,31 @@ html{
     left: 0;
     bottom: 0;
 }
+label.pass-hint{/*password container with the pass-cont and pass-hint paragraph*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#pass-hint{
+    align-self: flex-end;
+}
 
+#pass-hint-ul{
+    display:flex;
+    flex-direction: column;
+    justify-self: flex-end;
+    justify-content: flex-end;
+    text-align: left;
+    /* list-style: none; */
+    background-color: rgb(238, 201, 157);
+    font-weight: 700;
+    color:black;
+    width:fit-content;
+    padding:5px;
+    border-radius:10px;
+    line-height: 0.6cm;
+}
 /* found in the forms to give the forms some nice looks */
 .opac-bg{
     background-image: (linear-gradient(to right, rgba(black, black, black, 1), rgba(white, white, white, 0.5)));
@@ -173,7 +198,7 @@ html{
     bottom: 0;
 }
 
-.login-div form >label{
+.login-div form >label, .pass-cont/*pass-cont is a container that holds password text and field, in order to enable me align the pass-hint well*/{
     display: flex;
     flex-flow: row wrap;
     place-items: center;
@@ -182,11 +207,11 @@ html{
     z-index: 100;
 }
 
-label>*{
+label>*, .pass-cont>*{
     margin: 5px;
 }
 
-.login-div form label >input{
+.login-div form label >input, .pass-cont>input{
     padding: 8px;
     width: 80%;
     height: 5%;
@@ -195,7 +220,7 @@ label>*{
     background-color: rgb(212, 228, 233);
     color: black;
 }
-.login-div form button{
+.login-div form #login-btn, .login-div form #signup-btn{
     border: none;
     background-color: yellowgreen;
     transition: all 0.3s linear;
@@ -206,10 +231,11 @@ label>*{
     cursor: pointer;
 }
 
-.login-div form button:hover{
+.login-div form #login-btn:hover, .login-div form #signup-btn:hover{
     background-color: black;
     color: white;
 }
+
 
 /* footer */
 footer, .footer-cont{
