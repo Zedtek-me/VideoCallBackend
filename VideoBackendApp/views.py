@@ -5,7 +5,7 @@ from .models import User
 from django.contrib.auth.decorators import login_required, permission_required
 
 
-# functional views for requests and response
+# functional views for requests and response (not meant to be consumed by the react frontend. Just dedicated, entirely to the host(domain) of this backend app.)
 def home(request):
     # returns the dashboard if login successful
     if request.method == 'POST':
