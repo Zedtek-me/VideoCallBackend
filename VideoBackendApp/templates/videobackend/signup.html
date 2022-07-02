@@ -20,7 +20,11 @@
         <div class="opac-bg"></div>
         {%csrf_token%}
         <label for="Email">
-            Email: <input type="email" inputmode="email" name="email" placeholder="your name, e.g: Jack" required>
+            Email: <input type="email" inputmode="email" name="email" placeholder="your email address, e.g jacksparrow@gmail.com" required>
+        </label>
+
+        <label for="Name">
+            Name: <input type="text" inputmode="text" name="name" placeholder="your name, e.g: Jack." required>
         </label>
 
         <label for="surname">
@@ -36,7 +40,7 @@
             <p id="pass-hint">
                 <ul id="pass-hint-ul">
                     <li>your password must contain at least 6 characters</li>
-                    <li>your password must not be an easy to get, like: 123456</li>
+                    <li>your password must not be easy to guess, like: 123456</li>
                     <li>your password must contain at least 1 special character, like: @</li>
                     <li>your password must have at least 1 uppercased letter</li>
                 </ul>

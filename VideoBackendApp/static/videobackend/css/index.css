@@ -221,7 +221,7 @@ label>*, .pass-cont>*{
     margin: 5px;
 }
 
-.login-div form label >input, .pass-cont>input{
+.login-div form >label >input, .pass-cont>input{
     padding: 8px;
     width: 80%;
     height: 5%;

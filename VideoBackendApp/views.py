@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db import IntegrityError
 
 
 # functional views for requests and response (not meant to be consumed by the react frontend. Just dedicated, entirely to the host(domain) of this backend app.)
@@ -29,9 +30,14 @@ def signup(request):
     if request.method == 'POST':
         data= request.POST
         if data.get('password1') == data.get('password2'):#are the two passwords given correct?
-            user= User.videocon.create_user(**data)
-            messages.success(request, 'signup successful! You can login now.')
-            return redirect('login')
+            # confirm whether username has not been claimed by others.
+            try:
+                user= User.videocon.create_user(**data)
+                messages.success(request, 'signup successful! You can login now.')
+                return redirect('login')
+            except IntegrityError:
+                messages.error(request, 'Username is already taken! chose other usernames.')
+                return redirect('signup')
         messages.error(request, 'Your passwords didn\'t match; check them well.')
         return('signup')
     # get requests return the signup page
@@ -57,5 +63,7 @@ def meeting(request):
     return render(request, 'meeting_room.html', context={'user': user, 'msgs':msgs}, content_type='text/html')
 
 def log_out(request):
+    user= request.user
     logout(request)
+    messages.info(request, 'Bye %s' %user)
     return redirect('home page')
