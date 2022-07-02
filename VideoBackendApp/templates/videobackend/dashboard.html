@@ -3,7 +3,7 @@
 {%load static%}
 {%block login%}{%endblock%}
 {%block signup%}{%endblock%}
-
+{%block user%}{{user}}{%endblock%}
 
 
 {%block content%}
@@ -14,6 +14,6 @@
                 <div class="msg{%if msg.tags%} {{msg.tags}}{%endif%}" title="my username">{{msg}}</div>
             {%endfor%}
         {%endif%}
-        
+
     </div>
 {%endblock%}

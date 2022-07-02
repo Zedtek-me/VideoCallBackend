@@ -21,7 +21,7 @@
                     {%block login%}<li><a href="{%url 'home page'%}">Login</a><hr></li>{%endblock%}
                     {%block logout%}<li><a href="{%url 'logout'%}">Log out</a><hr></li>{%endblock%}
                     {%block mobile-settings%}<li><a href="{%url 'profile settings'%}">Settings</a></li>{%endblock%} <!-- display settings on dashboard and rooms only-->
-                    <div class="user-name">{{user}}</div>
+                    <div class="user-name">{%block user%} {%endblock%}</div>
                 </ul>
             </nav>
             <!-- mobile nav -->
