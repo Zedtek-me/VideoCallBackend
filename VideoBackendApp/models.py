@@ -102,7 +102,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Meeting(models.Model):
     host= models.ForeignKey(User, on_delete= models.CASCADE)
     title= models.CharField('meeting\'s title', max_length=700, unique=False, editable=True)
-    id= models.BigIntegerField('meeting id', unique=True ,primary_key=True, default=range(random.randint(20,22)))
+    meeting_id= models.IntegerField('meeting id', unique=True , default=int(str(uuid.uuid1().int)[:10]), editable=False)
     password= models.CharField(max_length=100, unique=False, null=True, blank=True, default=uuid.uuid4)
     starting= models.DateTimeField(default=datetime.now(), max_length=200)
     ending= models.DateTimeField(default=datetime.now() + timedelta(minutes=30), max_length=200)
