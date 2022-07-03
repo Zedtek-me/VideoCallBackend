@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -29,17 +30,23 @@ def home(request):
 def signup(request):
     if request.method == 'POST':
         data= request.POST
-        if data.get('password1') == data.get('password2'):#are the two passwords given correct?
+        username= data.get('username')
+        name=data.get('name')
+        email= data.get('email')
+        surname= data.get('surname')
+        password1= data.get('password1')
+        password2= data.get('password2')
+        if password1 == password2:#are the two passwords given correct?
             # confirm whether username has not been claimed by others.
             try:
-                user= User.videocon.create_user(**data)
+                user= User.videocon.create_user(email=email, username=username, name=name, surname=surname, password=password1)
                 messages.success(request, 'signup successful! You can login now.')
-                return redirect('login')
+                return redirect('home page')
             except IntegrityError:
                 messages.error(request, 'Username is already taken! chose other usernames.')
-                return redirect('signup')
+                return redirect('backend signup')
         messages.error(request, 'Your passwords didn\'t match; check them well.')
-        return('signup')
+        return('backend signup')
     # get requests return the signup page
     msgs=messages.get_messages(request)
     return render(request, 'signup.html', context={'msgs':msgs})
