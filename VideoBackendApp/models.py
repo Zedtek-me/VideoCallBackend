@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.forms import ValidationError
+from django.core.validators import MaxLengthValidator
+import random
+from datetime import datetime, timedelta
+import uuid
 
 # custom user manager
 class UserManager(BaseUserManager):
@@ -95,3 +99,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 # other tables start here
+class Meeting(models.Model):
+    host= models.ForeignKey(User, on_delete= models.CASCADE)
+    title= models.CharField('meeting\'s title', max_length=700, unique=False, editable=True)
+    id= models.BigIntegerField('meeting id', unique=True ,primary_key=True, default=range(random.randint(20,22)))
+    password= models.CharField(max_length=100, unique=False, null=True, blank=True, default=uuid.uuid4)
+    starting= models.DateTimeField(default=datetime.now(), max_length=200)
+    ending= models.DateTimeField(default=datetime.now() + timedelta(minutes=30), max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
+    def __repr__(self) -> str:
+        return self.title
