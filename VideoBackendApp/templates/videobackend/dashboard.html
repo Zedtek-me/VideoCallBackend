@@ -11,9 +11,34 @@
         <!-- flash msgs -->
         {%if msgs%}
             {%for msg in msgs%}
-                <div class="msg{%if msg.tags%} {{msg.tags}}{%endif%}" title="my username">{{msg}}</div>
+                <div class="msg {%if msg.tags%} {{msg.tags}}{%endif%}" title="my username">{{msg}}</div>
             {%endfor%}
         {%endif%}
-
+        <!-- meeting sector starts here -->
+        <div class="meeting-sector absolute">
+            <h2 id="meeting-info">Meeting Info:</h2><!--upcoming header-->
+            <div class="up-coming-sect">
+                <h5 class="upcoming">Upcoming Meetings:</5>
+                <ul id="upcoming-list">
+                    
+                </ul>
+            </div>
+            <!-- recent meeting sector -->
+            <div class="recent-sect">
+                <h5 class="upcoming">Recent Meetings:</5>
+                <ul id="upcoming-list">
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- profile info and starting/ending meeting sector -->
+        <div class="profile-info">
+            <img src="{{user.profile_picture.url}}" alt="profile-picture" id="profile-pic" class="bdr-50">
+            <h2 id="username">{{user.username}}</h2>
+            <div class="action-cont">
+                <input type="button" name="start" value="Start a meeting">
+                <input type="button" name="start" value="Join a meeting">
+            </div>
+        </div>
     </div>
 {%endblock%}

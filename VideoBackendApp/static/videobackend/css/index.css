@@ -247,7 +247,6 @@ label>*, .pass-cont>*{
     color: white;
 }
 
-
 /* footer */
 footer, .footer-cont{
     display: flex;
@@ -315,12 +314,77 @@ footer, .footer-cont{
 
 .dashboard-cont{
     margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
-@media screen and(max-width:800px){
+
+/* meeting sector in dashboard */
+.meeting-sector{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: flex-start;
+    position: absolute;
+    top: 0;
+    left: -45%;
+    bottom: 0;
+    right: 70%;
+    background-color: rgb(20, 20, 20);
+    color:white;
+    text-align: left;
+    width: 50%;
+    padding: 17px;
+}
+
+.meeting-sector>*{
+    margin: 15px;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+#profile-pic.bdr-50{/*profile picture in profile-info container*/
+    width: 70%;
+    height: 30%;
+    border-radius: 50%;
+    border:solid 1px rgb(120, 175, 37);
+}
+.action-cont{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+}
+.action-cont> input[type='button']{
+    padding: 7px;
+    background-color:rgb(120, 175, 37);
+    border-radius: 10px;
+    color:white;
+    margin: 5px;
+    cursor: pointer;
+}
+@media screen and (max-width:800px){
     .hamburger{display: flex;
     }
 
     .nav, .nav-ul{
         display: none;
+    }
+
+    .meeting-sector{
+        left:-5%;
+        width: 30%;
     }
 }
