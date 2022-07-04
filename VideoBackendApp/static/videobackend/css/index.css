@@ -2,11 +2,13 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    font-family: 'montserrat';
 }
+
 
 @font-face {
     font-family: Ariel;
-    src: url();
+    src: url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 }
 
 
@@ -336,13 +338,13 @@ footer, .footer-cont{
     align-self: flex-start;
     position: absolute;
     top: 0;
-    left: -30%;
+    left: 0;
     bottom: 0;
     right: 70%;
     background-color: rgb(20, 20, 20);
     color:white;
     text-align: left;
-    width: 50%;
+    width: 20%;
     padding: 17px;
 }
 
@@ -356,10 +358,12 @@ footer, .footer-cont{
     justify-content: center;
     align-items: center;
     align-self: center;
+    justify-self: flex-start;
+    margin-top: -20%;
 }
 #profile-pic.bdr-50{/*profile picture in profile-info container*/
     width: 70%;
-    height: 30%;
+    height: 20%;
     border-radius: 50%;
     border:solid 1px rgb(120, 175, 37);
 }
