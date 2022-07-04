@@ -113,3 +113,6 @@ class Meeting(models.Model):
 
     def __repr__(self) -> str:
         return self.title
+
+    class Meta:
+        permissons=[('can_start_meeting', 'can start a meeting'),('can_join_meeting', 'can join a meeting')]

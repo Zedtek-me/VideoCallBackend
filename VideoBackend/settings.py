@@ -135,7 +135,7 @@ STATICFILES_DIR= [os.path.join(BASE_DIR, 'VideoBackendApp/static/videbackend')]
 STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 # media files
 MEDIA_URL= 'media/'
-MEDIDA_ROOT= 'UserMedia'
+MEDIDA_ROOT= os.path.join(BASE_DIR,'UserMedia')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

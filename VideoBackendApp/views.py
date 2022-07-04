@@ -63,7 +63,9 @@ def setting(request):
     msgs=messages.get_messages(request)
     return render(request, 'settings.html', context={'user': user, 'msgs':msgs}, content_type='text/html')
 
+# the meeting room view-> reserver for only loggedin users who have permissions to start a meeting, or have requested to join a meeting
 @login_required(login_url='home page')
+@permission_required(['VideoBackendApp.can_start_meeting', 'VideoBackendApp.can_join_meeting'], login_url='home page', raise_exception=True)
 def meeting(request):
     user = request.user
     msgs=messages.get_messages(request)
