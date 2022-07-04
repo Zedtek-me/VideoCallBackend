@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.forms import ValidationError
-from django.core.validators import MaxLengthValidator
 import random
 from datetime import datetime, timedelta
 import uuid

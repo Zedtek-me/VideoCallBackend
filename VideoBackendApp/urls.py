@@ -14,7 +14,6 @@ urlpatterns= [
     path('settings/', views.setting, name='profile settings'),
     path('meeting_room/', views.meeting, name='meeting room'),
     path('sign_up/', views.signup, name='backend signup'),
-    # path('login/', views.home, name='login'),
     path('logout/', views.log_out, name='logout'),
 ]
 

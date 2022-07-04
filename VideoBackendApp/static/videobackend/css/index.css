@@ -240,11 +240,13 @@ label>*, .pass-cont>*{
     border-radius: 15px;
     color: white;
     cursor: pointer;
+    z-index: 100;
 }
 
 .login-div form #login-btn:hover, .login-div form #signup-btn:hover{
     background-color: black;
     color: white;
+    border:solid 2px yellowgreen;
 }
 
 /* footer */
@@ -334,7 +336,7 @@ footer, .footer-cont{
     align-self: flex-start;
     position: absolute;
     top: 0;
-    left: -45%;
+    left: -30%;
     bottom: 0;
     right: 70%;
     background-color: rgb(20, 20, 20);
