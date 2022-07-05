@@ -85,9 +85,6 @@ html{
     margin: 1px;
 }
 
-.m-nav{/*what to toggle when the hamburger is clicked*/
-    left: 30%;
-}
 .mobile-nav{/*parent cont for mobile ul*/
     position: absolute;
     top: 0;
@@ -95,6 +92,10 @@ html{
     left: 100%;
     bottom: -50%;
     transition: all 0.3s ease-in-out;
+}
+
+.m-nav{/*what to toggle when the hamburger is clicked*/
+    left: 30%;
 }
 
 .mobile-nav-ul{
@@ -356,25 +357,65 @@ footer, .footer-cont{
 .meeting-sector>*{
     margin: 15px;
 }
-.secs{
+.secs{/*subsectors in the meeting sector, containing recent and upcoming meetings*/
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.meeting-list{
+.meeting-list{/*a list of all meetings, past and present, by the left side on the dashboard*/
     display: flex;
+    flex-direction: column;
     align-self: flex-end;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: flex-end;
     text-align: center;
     font-size: 10px;
     font-weight: 400;
     list-style-type:square;
     color: rgb(120, 175, 37);
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.meeting-list>*{
+    margin: 6px;
+}
+
+.meeting-action-prompts{/*container for actions against the meetings listed on the dashboard*/
+    display: none;
+    position: absolute;
+    top: 50;
+    right: 0;
+    left: 0;
+    bottom: 50;
+    background-color: black;
+    color: white;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+}
+.meeting-choice{ /*the input fields for each choice*/
+    background-color: rgb(120, 175, 37);
+    border:solid 1px white;
+    color: black;
+    border-radius: 10px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+input.delete-meeting{
+    background-color: red;
+    color: white;
 }
 #meeting-title{
     font-size: 12px;
 }
+
+/* profile info on the dashboard page */
 .profile-info{
     display: flex;
     flex-direction: column;
@@ -411,7 +452,6 @@ footer, .footer-cont{
     .nav, .nav-ul{
         display: none;
     }
-
     .meeting-sector{
         left:-5%;
         width: 30%;

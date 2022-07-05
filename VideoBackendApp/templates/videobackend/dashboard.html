@@ -23,9 +23,19 @@
                     {%for meeting in current%}
                         <li id="meeting">
                             <h6 id="meeting-title">Title: {{meeting.title}}</h6>
-                            <p id="host">Host: {{meeting.host}}</p>
+                            <p id="host">Host: {%if meeting.host == request.user%} Me {%else%}{{meeting.host}}{%endif%}</p>
                             <p id="date">Starting by: {{meeting.starting}}</p>
                         </li>
+                        <!-- prompts when clicked, confirming whether to start or delete meeting from dashboard -->
+                        <div class="meeting-action-prompts">
+                            <p id="like-to-do">What would you like to do?</p>
+                            <form action="" method="post" id="m-action-form">
+                                {%if meeting.host == user%}<input type="button" value="start meeting?" name="start-meeting" class="meeting-choice">
+                                {%else%}<input type="button" value="join meeting" name="join-meeting" class="meeting-choice">{%endif%}
+                                <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice">
+                                <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
+                            </form>
+                        </div>
                     {%endfor%}
                 </ul>
             </div>
@@ -36,9 +46,17 @@
                     {%for meeting in recent%}
                         <li id="meeting">
                             <h6 id="meeting-title">Title: {{meeting.title}}</h6>
-                            <p id="host">Host: {{meeting.host}}</p>
+                            <p id="host">Host: {%if meeting.host == request.user%} Me {%else%}{{meeting.host}}{%endif%}</p>
                             <p id="date">Ended on: {{meeting.starting}}</p>
                         </li>
+                        <!-- prompts when clicked, confirming whether to start or delete meeting from dashboard -->
+                        <div class="meeting-action-prompts">
+                            <p id="like-to-do">What would you like to do?</p>
+                            <form action="" method="post" id="m-action-form">
+                                <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice delete-meeting">
+                                <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
+                            </form>
+                        </div>
                     {%endfor%}
                 </ul>
             </div>
@@ -48,7 +66,7 @@
             <img src="{{user.profile_picture.url}}" alt="profile-picture" id="profile-pic" class="bdr-50">
             <h2 id="username">{{user.username}}</h2>
             <div class="action-cont">
-                <input type="button" name="start" value="Start a meeting">
+                <input type="button" name="start" value="Schedule a meeting">
                 <input type="button" name="start" value="Join a meeting">
             </div>
         </div>
