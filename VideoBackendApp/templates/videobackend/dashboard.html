@@ -17,10 +17,10 @@
         <!-- meeting sector starts here -->
         <div class="meeting-sector absolute">
             <h2 id="meeting-info">Meeting Info:</h2><!--upcoming header-->
-            <div class="up-coming-sect">
+            <div class="up-coming-sect secs">
                 <h5 class="upcoming">Upcoming Meetings:</5>
-                <ul id="upcoming-list">
-                    {%for meeting in coming%}
+                <ul class="upcoming-list meeting-list">
+                    {%for meeting in current%}
                         <li id="meeting">
                             <h6 id="meeting-title">Title: {{meeting.title}}</h6>
                             <p id="host">Host: {{meeting.host}}</p>
@@ -30,9 +30,9 @@
                 </ul>
             </div>
             <!-- recent meeting sector -->
-            <div class="recent-sect">
+            <div class="recent-sect secs">
                 <h5 class="upcoming">Recent Meetings:</5>
-                <ul id="recent-list">
+                <ul class="recent-list meeting-list">
                     {%for meeting in recent%}
                         <li id="meeting">
                             <h6 id="meeting-title">Title: {{meeting.title}}</h6>

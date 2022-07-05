@@ -356,7 +356,25 @@ footer, .footer-cont{
 .meeting-sector>*{
     margin: 15px;
 }
-
+.secs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.meeting-list{
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 400;
+    list-style-type:square;
+    color: rgb(120, 175, 37);
+}
+#meeting-title{
+    font-size: 12px;
+}
 .profile-info{
     display: flex;
     flex-direction: column;
