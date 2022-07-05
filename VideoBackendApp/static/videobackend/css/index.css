@@ -363,6 +363,10 @@ footer, .footer-cont{
     justify-content: center;
     align-items: center;
 }
+#no-meeting{
+    color: white;
+    cursor:none;
+}
 .meeting-list{/*a list of all meetings, past and present, by the left side on the dashboard*/
     display: flex;
     flex-direction: column;
@@ -383,6 +387,10 @@ footer, .footer-cont{
 }
 .meeting-list>*{
     margin: 6px;
+}
+
+.recent-list{
+    color: bisque;
 }
 
 .meeting-action-prompts{/*container for actions against the meetings listed on the dashboard*/

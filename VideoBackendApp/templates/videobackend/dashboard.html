@@ -20,23 +20,26 @@
             <div class="up-coming-sect secs">
                 <h5 class="upcoming">Upcoming Meetings:</5>
                 <ul class="upcoming-list meeting-list">
-                    {%for meeting in current%}
-                        <li id="meeting">
-                            <h6 id="meeting-title">Title: {{meeting.title}}</h6>
-                            <p id="host">Host: {%if meeting.host == request.user%} Me {%else%}{{meeting.host}}{%endif%}</p>
-                            <p id="date">Starting by: {{meeting.starting}}</p>
-                        </li>
-                        <!-- prompts when clicked, confirming whether to start or delete meeting from dashboard -->
-                        <div class="meeting-action-prompts">
-                            <p id="like-to-do">What would you like to do?</p>
-                            <form action="" method="post" id="m-action-form">
-                                {%if meeting.host == user%}<input type="button" value="start meeting?" name="start-meeting" class="meeting-choice">
-                                {%else%}<input type="button" value="join meeting" name="join-meeting" class="meeting-choice">{%endif%}
-                                <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice">
-                                <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
-                            </form>
-                        </div>
-                    {%endfor%}
+                    {%if current%}
+                        {%for meeting in current%}
+                            <li id="meeting">
+                                <h6 id="meeting-title">Title: {{meeting.title}}</h6>
+                                <p id="host">Host: {%if meeting.host == request.user%} Me {%else%}{{meeting.host}}{%endif%}</p>
+                                <p id="date">Starting by: {{meeting.starting}}</p>
+                            </li>
+                            <!-- prompts when clicked, confirming whether to start or delete meeting from dashboard -->
+                            <div class="meeting-action-prompts">
+                                <p id="like-to-do">What would you like to do?</p>
+                                <form action="" method="post" id="m-action-form">
+                                    {%if meeting.host == user%}<input type="button" value="start meeting?" name="start-meeting" class="meeting-choice">
+                                    {%else%}<input type="button" value="join meeting" name="join-meeting" class="meeting-choice">{%endif%}
+                                    <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice">
+                                    <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
+                                </form>
+                            </div>
+                        {%endfor%}
+                    {%else%} <p id="no-meeting">You have no scheduled or upcoming meetings</p>
+                    {%endif%}
                 </ul>
             </div>
             <!-- recent meeting sector -->
