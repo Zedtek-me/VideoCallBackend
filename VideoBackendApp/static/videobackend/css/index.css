@@ -453,6 +453,41 @@ input.delete-meeting{
     margin: 5px;
     cursor: pointer;
 }
+/* meeting scheduling form below */
+.schedule-meeting{/*form container*/
+    display: flex;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    width: 50%;
+    background-color:rgb(31, 114, 168);
+    justify-content: center;
+    margin-top: -25%;
+    margin-bottom: 5%;
+}
+
+.meeting-schedule-form, #meeting-schedule-form>label{/*form itself*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    width: 100%;
+    color: white;
+    font-size: 200;
+}
+
+#meeting-schedule-form >label input{
+    width: 100%;
+    height: 15%;
+    border-radius: 15px;
+    padding: 10px;
+    border:none;
+}
+
+#meeting-schedule-form >label input:active{
+    border:solid 1px rgb(120, 175, 37);
+}
 @media screen and (max-width:800px){
     .hamburger{display: flex;
     }

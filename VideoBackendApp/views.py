@@ -61,7 +61,6 @@ def signup(request):
 def dashboard(request):
     user = request.user
     recent, coming= current_and_past_meetings()
-    print(recent, coming)
     msgs=messages.get_messages(request)
     return render(request, 'dashboard.html', context={'user': user, 'msgs':msgs, 'recent': recent, 'current': coming})
 
