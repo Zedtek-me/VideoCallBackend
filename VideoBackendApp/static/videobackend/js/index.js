@@ -13,5 +13,12 @@ const meetingPrompt= ()=>{// funtion for meeting click events-> all meeting pres
         }
     }
 }
+
+const toggleMeetingSchedule=()=>{
+    let scheduleBtn= document.querySelector("input[name='start']")
+    let scheduleMeeting= document.querySelector('.schedule-meeting')
+    scheduleBtn.addEventListener('click', (e)=>scheduleMeeting.classList.toggle('toggleScheduleDisplay'))
+}
+toggleMeetingSchedule()
 meetingPrompt()
 toggleMobile()

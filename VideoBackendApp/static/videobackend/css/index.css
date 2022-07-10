@@ -455,7 +455,7 @@ input.delete-meeting{
 }
 /* meeting scheduling form below */
 .schedule-meeting{/*form container*/
-    display: flex;
+    display:none;
     flex-direction: column;
     color: white;
     text-align: center;
@@ -464,25 +464,35 @@ input.delete-meeting{
     justify-content: center;
     margin-top: -25%;
     margin-bottom: 5%;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.8s ease;
 }
-
-.meeting-schedule-form, #meeting-schedule-form>label{/*form itself*/
+/* schedule meeting  toggle*/
+.toggleScheduleDisplay{
+    display: flex;
+}
+.meeting-schedule-form{/*form itself*/
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 8px;
-    width: 100%;
+    width: 50%;
     color: white;
     font-size: 200;
 }
 
-#meeting-schedule-form >label input{
+#meeting-schedule-form >label{
     width: 100%;
     height: 15%;
     border-radius: 15px;
     padding: 10px;
     border:none;
+}
+
+#meeting-schedule-form>label input{
+    width: 100%;
 }
 
 #meeting-schedule-form >label input:active{
