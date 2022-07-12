@@ -4,8 +4,8 @@
   "description": "to bundle up my static assets, and enable nice syntaxes of es6",
   "main": "index.js",
   "scripts": {
-    "start": "webpack.config.js",
-    "build" :"npm run start --watch " 
+    "start": "--config webpack.config.js --mode development",
+    "build" :"npm run start --watch" 
   },
   "keywords": [],
   "author": "",
