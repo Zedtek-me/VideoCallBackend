@@ -29,11 +29,11 @@
                             </li>
                             <!-- prompts when clicked, confirming whether to start or delete meeting from dashboard -->
                             <div class="meeting-action-prompts">
-                                <p id="like-to-do">What would you like to do?</p>
+                                <p id="like-to-do">What would you like to do?<i class="fa-solid fa-xmark"></i></p>
                                 <form action="" method="post" id="m-action-form">
                                     {%if meeting.host == user%}<input type="button" value="start meeting?" name="start-meeting" class="meeting-choice">
                                     {%else%}<input type="button" value="join meeting" name="join-meeting" class="meeting-choice">{%endif%}
-                                    <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice">
+                                    <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice delete-meeting">
                                     <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
                                 </form>
                             </div>
@@ -54,7 +54,7 @@
                         </li>
                         <!-- prompts when clicked, confirming whether to start or delete meeting from dashboard -->
                         <div class="meeting-action-prompts">
-                            <p id="like-to-do">What would you like to do?</p>
+                            <p id="like-to-do">What would you like to do?<i class="fa-solid fa-xmark"></i></p>
                             <form action="" method="post" id="m-action-form">
                                 <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice delete-meeting">
                                 <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
@@ -76,15 +76,18 @@
         <!-- meeting schedule form sector -->
         <div class="schedule-meeting">
             <p id="schedule-headline">Schedule your meeting below.</p>
-            <form id="meeting-schedule-form">
+            <form id="meeting-schedule-form" action="{%url 'new meeting'%}">
                 <label for="Meeting Title">
-                    Title: <input type="text" name="meeting-title">
+                    Title: <input type="text" name="meeting-title" required>
                 </label>
                 <label for="Meeting Date">
-                    Date: <input type="date" name="meeting-date">
+                   Startng Date: <input type="datetime-local" name="meeting-starting-date" required>
+                </label>
+                <label for="Meeting Date">
+                   Ending Date: <input type="datetime-local" name="meeting-ending-date" required>
                 </label>
                 <label for="Meeting Pass">
-                    Password: <input type="password" name="meeting-pass">
+                    Password: <input type="text" name="meeting-pass" required>
                 </label>
                 <button type="submit" class="schedule-btn">Schedule Now</button>
             </form>

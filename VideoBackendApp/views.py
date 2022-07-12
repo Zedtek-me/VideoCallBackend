@@ -83,3 +83,9 @@ def log_out(request):
     logout(request)
     messages.info(request, 'Bye %s' %user)
     return redirect('home page')
+
+def schedule_meeting(request):#handles new meeting that is scheduled from the dashboard; returns back to the dashboard
+    meeting_info= request.GET
+    meeting= Meeting.objects.create(host=request.user, title=meeting_info.get('meeting-title'), password=meeting_info.get('meeting-pass'), starting= meeting_info.get('meeting-starting-date'), ending= meeting_info.get('meeting-ending-date'))
+    messages.success(request, 'new meeting created!')
+    return redirect('dashboard')

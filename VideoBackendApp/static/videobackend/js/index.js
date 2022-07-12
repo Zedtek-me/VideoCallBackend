@@ -19,6 +19,17 @@ const toggleMeetingSchedule=()=>{
     let scheduleMeeting= document.querySelector('.schedule-meeting')
     scheduleBtn.addEventListener('click', (e)=>scheduleMeeting.classList.toggle('toggleScheduleDisplay'))
 }
+const removeMeetingAction= ()=>{
+    let removeIcons= document.querySelectorAll('.fa-xmark')
+    let actionParents= document.querySelectorAll('.meeting-action-prompts')
+    for(let icon=0; icon<removeIcons.length; icon++){
+        removeIcons[icon].addEventListener('click', (e)=>{
+            actionParents[icon].style.display='none'
+        })
+}
+}
+
+removeMeetingAction()
 toggleMeetingSchedule()
 meetingPrompt()
 toggleMobile()

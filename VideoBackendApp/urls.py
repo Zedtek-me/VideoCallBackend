@@ -15,6 +15,7 @@ urlpatterns= [
     path('meeting_room/', views.meeting, name='meeting room'),
     path('sign_up/', views.signup, name='backend signup'),
     path('logout/', views.log_out, name='logout'),
+    path('schedule_meeting', views.schedule_meeting, name='new meeting')
 ]
 
 if settings.DEBUG:

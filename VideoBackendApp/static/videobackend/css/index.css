@@ -409,7 +409,7 @@ footer, .footer-cont{
 .meeting-choice{ /*the input fields for each choice*/
     background-color: rgb(120, 175, 37);
     border:solid 1px white;
-    color: black;
+    color: white;
     border-radius: 10px;
     padding: 3px;
     cursor: pointer;
@@ -418,6 +418,15 @@ footer, .footer-cont{
 input.delete-meeting{
     background-color: red;
     color: white;
+}
+#like-to-do{/*container for the meeting action instruction and its icon*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.fa-xmark{
+    color:white;
+    margin: 5px;
 }
 #meeting-title{
     font-size: 12px;
@@ -482,6 +491,7 @@ input.delete-meeting{
     align-items: center;
     padding: 8px;
     width: 50%;
+    height: 100%;
     color: white;
     font-size: 200;
 }
@@ -490,22 +500,24 @@ input.delete-meeting{
     display: flex;
     place-items: center;
     width: 100%;
-    height: 30%;
+    height: 20%;
     padding: 10px;
-    margin: 1%;
+    text-align: left;
 }
 
 #meeting-schedule-form>label input{
     width: 100%;
-    height: 100%;
+    height: 100%; /*automatically translates to 20%, since label has the width of 20%*/
     border-radius: 15px;
     border:none;
 }
-.schedule-btn{/*the "Schedule Now" button*/
+.schedule-btn{/*the "Schedule Now" button to schedule the meeting*/
     border-radius: 15px;
     padding: 8px;
     background-color: rgb(120, 175, 37);
     color: white;
+    /* margin: 9px; */
+    cursor: pointer;
 }
 #meeting-schedule-form >label input:active{
     border:solid 1px rgb(120, 175, 37);
@@ -521,4 +533,8 @@ input.delete-meeting{
         left:-5%;
         width: 30%;
     }
+    /* dashboard settings sector */
+    /* .meeting-schedule-form{
+       
+    } */
 }
