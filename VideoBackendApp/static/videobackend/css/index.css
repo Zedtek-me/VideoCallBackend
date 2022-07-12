@@ -278,6 +278,8 @@ footer, .footer-cont{
 
 /* flash colors */
 .error{
+    display: flex;
+    place-items: center;
     background-color: red;
     color: white;
     text-align: center;

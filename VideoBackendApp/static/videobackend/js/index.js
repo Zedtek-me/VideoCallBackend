@@ -25,6 +25,7 @@ const removeMeetingAction= ()=>{
     for(let icon=0; icon<removeIcons.length; icon++){
         removeIcons[icon].addEventListener('click', (e)=>{
             actionParents[icon].style.display='none'
+            flashMsg[icon].style.display='none'
         })
 }
 }
@@ -47,6 +48,13 @@ const handleSideMeetingClicks= ()=>{
     }
 }
 
+const rmvFlash= ()=>{
+    let flashMsg= document.querySelector('flash')
+    let removeIcons= document.querySelector('.rmv-flash').addEventListener('cick', (e)=>flashMsg.style.display= 'none')
+
+}
+
+rmvFlash()
 handleSideMeetingClicks()
 removeMeetingAction()
 toggleMeetingSchedule()
