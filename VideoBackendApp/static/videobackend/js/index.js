@@ -28,7 +28,26 @@ const removeMeetingAction= ()=>{
         })
 }
 }
+const handleSideMeetingClicks= ()=>{
+    let meetingChoices = document.querySelectorAll('.meeting-choice')//gets all the elements that are meant for deleting, starting or joining meetings
+    for(let i= 0; i<meetingChoices.length; i++){
+        meetingChoices[i].addEventListener('click', (e)=>{
+            e.target.value= ''
+            if(e.target.name === 'delete-meeting'){//checks what time of action is requwsted(delete, join, or start)
+               //do something accordingly
+            }
 
+            else if(e.target.name === 'join-meeting'){
+                //do something accordingly
+            }
+            else{
+                //Means start the meeting: do other things accordingly...
+            }
+        })
+    }
+}
+
+handleSideMeetingClicks()
 removeMeetingAction()
 toggleMeetingSchedule()
 meetingPrompt()
