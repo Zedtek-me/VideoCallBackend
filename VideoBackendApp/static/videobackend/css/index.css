@@ -410,6 +410,7 @@ input.delete-meeting{
 .fa-xmark{
     color:white;
     margin: 5px;
+    cursor: pointer;
 }
 #meeting-title{
     font-size: 12px;

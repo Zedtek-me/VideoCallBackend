@@ -11,7 +11,7 @@
         <!-- flash msgs -->
         {%if msgs%}
             {%for msg in msgs%}
-                <div class="msg {%if msg.tags%} {{msg.tags}}{%endif%}" title="my username">{{msg}}</div>
+                <div class="msg {%if msg.tags%} {{msg.tags}}{%endif%} flash" title="my username">{{msg}}<i class="fa-solid fa-xmark rmv-flash"></i></div>
             {%endfor%}
         {%endif%}
         <!-- meeting sector starts here -->
