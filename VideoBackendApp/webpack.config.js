@@ -1,16 +1,16 @@
 const path= require('path')
 
 module.exports={
-    entry: "",
+    entry: "./static/js/index.js",
     output:{
-        filename:"",
-        path:""
+        filename:"bundledIndex",
+        path:"./static/js"
     },
     module: {
         rules:[{
-            test: "",
+            test: /\.js$/,
             exclude:"node_modules",
-            use:""
+            use:"babel-loader",
         }]
     }
 }
