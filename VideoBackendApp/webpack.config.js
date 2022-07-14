@@ -1,15 +1,15 @@
 const path= require('path')
 
 module.exports={
-    entry: "./static/js/index.js",
+    entry: [__dirname, "./static/videobackend/js/index.js"],
     output:{
-        filename:"bundledIndex",
-        path:"./static/js"
+        filename:"bundledIndex.js",
+        path: path.resolve(__dirname, "static/videobackend/js/build")
     },
     module: {
         rules:[{
             test: /\.js$/,
-            exclude:"node_modules",
+            // exclude:"node_modules",
             use:"babel-loader",
         }]
     }

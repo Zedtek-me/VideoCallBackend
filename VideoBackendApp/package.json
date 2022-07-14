@@ -2,9 +2,10 @@
   "name": "videochatapp_asset_bundler",
   "version": "1.0.0",
   "description": "intended for bundling all of the javascript assets used in this project",
-  "main": "./static/js/index.js",
+  "main": "./static/videobackend/js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "webpack --config webpack.config.js --mode development",
+    "build": "webpack"
   },
   "author": "Zedtek",
   "license": "ISC",
