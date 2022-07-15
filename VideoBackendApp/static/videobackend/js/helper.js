@@ -1,5 +1,6 @@
 var csrf= document.cookie.split('=')[1]
 let hiddenMsg= document.querySelector('.hidden-msgs')
+let message = hiddenMsg
 const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying meeting action choices on a meeting
     let removeIcons= document.querySelectorAll('.fa-xmark')
     let actionParents= document.querySelectorAll('.meeting-action-prompts')
@@ -33,6 +34,7 @@ const handleSideMeetingClicks= ()=>{
                     hiddenMsg.style.display= 'flex'
                     // window.location.pathname= 'dashboard/'
                 }
+                setTimeout(()=>message, 200)//displays the flash message for 2 seconds
                })
                
             }
@@ -46,12 +48,28 @@ const handleSideMeetingClicks= ()=>{
                         'X-CSRFTOKEN': csrf,
                     }
                    })
-                .then((resp)=>resp.json())
-                .then((data)=>{console.log(typeof data, data)})
-            }
+                   .then((resp)=>resp.json())
+                   .then((data)=>{
+                    if (data.join){
+                        window.location.pathname= 'meeting_room/'
+                        
+                    }
+                    else if (data.meeting_not_started){
+                        hiddenMsg.textContent= data.meeting_not_started
+                        hiddenMsg.style.backgroundColor="red"
+                        hiddenMsg.style.color= "white"
+                        hiddenMsg.style.display= "flex"
+                    }
+                    else{
+                        hiddenMsg.textContent= "This meeting has ended!"
+                        hiddenMsg.style.backgroundColor='red'
+                        hiddenMsg.style.display="flex"
+                    }})
+                    setTimeout(()=>message, 200)//displays the flash message for 2 seconds
+                }
             else{//start
                 //Means start the meeting: do other things accordingly...
-                fetch('http://127.0.0.1:9000/start/', {
+                fetch('http://127.0.0.1:9000/meeting_room/', {
                     method: 'POST',
                     body: JSON.stringify(meetingId),
                     headers:{
@@ -60,7 +78,18 @@ const handleSideMeetingClicks= ()=>{
                     }
                    })
                 .then((resp)=>resp.json())
-                .then((data)=>{console.log(typeof data)})
+                .then((data)=>{
+                    if (data.start){
+                        window.location.pathname= "meeting_room"
+                    }
+                    else{
+                        hiddenMsg.textContent= data.not_host
+                        hiddenMsg.style.backgroundColor="red"
+                        hiddenMsg.style.color="white"
+                        hiddenMsg.style.display= "flex"
+                    }
+                    setTimeout(()=>message, 200)//displays the flash message for 2 seconds
+                })
             }
         })
     }

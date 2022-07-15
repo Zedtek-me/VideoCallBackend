@@ -92,13 +92,17 @@ def schedule_meeting(request):#handles new meeting that is scheduled from the da
 def start_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
-    meeting_id= json.loads(request.body) #gets the meeting id from request
-    db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
-    context.update(meeting= db_meeting, user=user)
-    if (db_meeting.host == user):#check if the user is the host, to determine whether to start the meeting for the user or ask him to join the ongoing meeting, if started.
-        return JsonResponse({"start": "can start meeting"})
-    else: 
-        return JsonResponse({"not host":"you can't start meeting, since you're not the host."})
+    if request.method == "POST":
+        meeting_id= json.loads(request.body) #gets the meeting id from request
+        db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
+        if (db_meeting.host == user):#check if the user is the host, to determine whether to start the meeting for the user or ask him to join the ongoing meeting, if started.
+            db_meeting.started= True
+            db_meeting.save()
+            return JsonResponse({"start": "can start meeting"})
+        else: 
+            return JsonResponse({"not_host":"you can't start meeting, since you're not the host."})
+    context.update(user=user)
+    return render(request, 'meeting_room.html', context)
 
 def join_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
