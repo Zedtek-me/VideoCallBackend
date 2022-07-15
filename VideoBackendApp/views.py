@@ -1,3 +1,4 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -89,3 +90,25 @@ def schedule_meeting(request):#handles new meeting that is scheduled from the da
     meeting= Meeting.objects.create(host=request.user, title=meeting_info.get('meeting-title'), password=meeting_info.get('meeting-pass'), starting= meeting_info.get('meeting-starting-date'), ending= meeting_info.get('meeting-ending-date'))
     messages.success(request, 'new meeting created!')
     return redirect('dashboard')
+
+# delete, join and start meeting functions defined below
+def start_meeting(request: HttpRequest)-> HttpResponse:
+    context= {}
+    user= request.user
+    meeting_id= request.body
+    print(meeting_id)
+    return redirect('meeeting_room')
+
+def join_meeting(request: HttpRequest)-> HttpResponse:
+    context= {}
+    user= request.user
+    meeting_id= request.body
+    print(meeting_id)
+    return redirect('meeeting_room')
+
+def delete_meeting(request: HttpRequest)-> HttpResponse:
+    context= {}
+    user= request.user
+    meeting_id= request.body
+    print(meeting_id)
+    return redirect('meeeting_room')

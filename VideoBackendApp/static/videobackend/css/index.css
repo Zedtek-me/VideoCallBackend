@@ -107,9 +107,10 @@ html{
 }
 
 .mobile-nav-ul li > a{
-    color: black;
+    color: white;
     text-decoration: none;
     transition: all 0.3s linear;
+    font-weight: 500;
 }
 /*hover for large and mobile navs*/
 .nav-ul li>a:hover{

@@ -9,11 +9,12 @@ const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying mee
 }
 const handleSideMeetingClicks= ()=>{
     let meetingChoices = document.querySelectorAll('.meeting-choice')//gets all the elements that are meant for deleting, starting or joining meetings
+    let meetingIdz= document.querySelectorAll("input[name='meeting-id']")
     for(let i= 0; i<meetingChoices.length; i++){
         meetingChoices[i].addEventListener('click', (e)=>{
-            e.target.value= ''
             if(e.target.name === 'delete-meeting'){//checks what time of action is requwsted(delete, join, or start)
-               //do something accordingly
+               let meetingId=meetingIdz[i].value
+               console.log(meetingId)
             }
 
             else if(e.target.name === 'join-meeting'){

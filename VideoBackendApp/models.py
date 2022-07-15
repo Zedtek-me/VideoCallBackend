@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     profile_picture= models.ImageField(
         verbose_name='Profile Image',
         upload_to='profile_pictures/', 
-        default='defualt.jpg'
+        default='default.jpg'
         )
     date_joined= models.DateTimeField(
         verbose_name='Signed up at',
