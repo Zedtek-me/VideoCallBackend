@@ -1,4 +1,5 @@
 var csrf= document.cookie.split('=')[1]
+let hiddenMsg= document.querySelector('.hidden-msgs')
 const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying meeting action choices on a meeting
     let removeIcons= document.querySelectorAll('.fa-xmark')
     let actionParents= document.querySelectorAll('.meeting-action-prompts')
@@ -24,7 +25,15 @@ const handleSideMeetingClicks= ()=>{
                     'X-CSRFTOKEN': csrf,
                 }
                })
-               .then((resp)=>console.log(resp.data))
+               .then((resp)=>resp.json())
+               .then((data)=>{
+                if (data.deleted){
+                    hiddenMsg.textContent= 'Meeting deleted successfully. reload to refresh page.'
+                    hiddenMsg.style.backgroundColor= 'rgb(238, 201, 157)'
+                    hiddenMsg.style.display= 'flex'
+                    // window.location.pathname= 'dashboard/'
+                }
+               })
                
             }
 
@@ -37,7 +46,8 @@ const handleSideMeetingClicks= ()=>{
                         'X-CSRFTOKEN': csrf,
                     }
                    })
-                   .then((resp)=>console.log(resp.data))
+                .then((resp)=>resp.json())
+                .then((data)=>{console.log(typeof data, data)})
             }
             else{//start
                 //Means start the meeting: do other things accordingly...
@@ -49,7 +59,8 @@ const handleSideMeetingClicks= ()=>{
                         'X-CSRFTOKEN': csrf,
                     }
                    })
-                   .then((resp)=>console.log(resp.data))
+                .then((resp)=>resp.json())
+                .then((data)=>{console.log(typeof data)})
             }
         })
     }

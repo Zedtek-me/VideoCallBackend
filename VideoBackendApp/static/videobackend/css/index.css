@@ -304,6 +304,16 @@ footer, .footer-cont{
     padding:5px;
 }
 
+/* json message */
+
+.json-msgs{
+    display: none;
+    font-weight: 200;
+    text-align: center;
+    width: fit-content;
+    padding: 8px;
+}
+
 /* dashborad stylings here */
 
 .dashboard-cont{

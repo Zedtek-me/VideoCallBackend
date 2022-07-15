@@ -96,10 +96,9 @@ def start_meeting(request: HttpRequest)-> HttpResponse:
     db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
     context.update(meeting= db_meeting, user=user)
     if (db_meeting.host == user):#check if the user is the host, to determine whether to start the meeting for the user or ask him to join the ongoing meeting, if started.
-        return render(request, 'meeting_room.html', context)
+        return JsonResponse({"start": "can start meeting"})
     else: 
-        messages.error(request, 'you can\'t start this meeting since you\'re not the host. Join meeting instead')
-        return redirect('dashboard')
+        return JsonResponse({"not host":"you can't start meeting, since you're not the host."})
 
 def join_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
@@ -111,12 +110,11 @@ def join_meeting(request: HttpRequest)-> HttpResponse:
     #now check if the meeting has started or not...?
     current_time= timezone.now()
     if db_meeting.starting <= current_time and db_meeting.started:#the starting time isn't yet but the host has started it
-        return render(request, 'meeeting_room.html', context)
+        return JsonResponse({"join": "can join the meeting"})
     elif db_meeting.starting >= current_time and not db_meeting.started:#meeting should have probably started but host hasn't started it
-        messages.info(request, 'The host hasn\'t started this meeting yet. Kindly wait till the meeting starts.')
+        return JsonResponse({"meeting_not_started": "host not started meeting"})
     else:#meeting has likely expired and not restarted
-        messages.error(request, 'You can\'t join this meeting because it ended on %s, and hasn\'t been re-started by the host!'%db_meeting.ending)
-    return redirect('dashboard')
+        return JsonResponse({"meeting_ended": "the meeting has expired!"})
 
 def delete_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
