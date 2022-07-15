@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -6,6 +6,7 @@ from .models import User, Meeting
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError
 from django.utils import timezone
+import json
 
 
 # a utility function that returns an an iterable of scheduled and recent meetings
@@ -47,7 +48,8 @@ def signup(request):
             # confirm whether username has not been claimed by others.
             try:
                 user= User.videocon.create_user(email=email, username=username, name=name, surname=surname, password=password1)
-                user.user_permissions.add('VideoBackendApp.can_join_meeting')#let users have permissions to join meetings by default
+                if user:#let users have permissions to join meetings by default when created
+                    user.user_permissions.add('VideoBackendApp.can_join_meeting')
                 messages.success(request, 'signup successful! You can login now.')
                 return redirect('home page')
             except IntegrityError:
@@ -90,7 +92,7 @@ def schedule_meeting(request):#handles new meeting that is scheduled from the da
 def start_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
-    meeting_id= request.body #gets the meeting id from request
+    meeting_id= json.loads(request.body) #gets the meeting id from request
     db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
     context.update(meeting= db_meeting, user=user)
     if (db_meeting.host == user):#check if the user is the host, to determine whether to start the meeting for the user or ask him to join the ongoing meeting, if started.
@@ -102,8 +104,9 @@ def start_meeting(request: HttpRequest)-> HttpResponse:
 def join_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
-    meeting_id= request.body #gets the meeting id from request
+    meeting_id= json.loads(request.body) #gets the meeting id from request
     db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
+    print(db_meeting.title)
     context.update(meeting= db_meeting, user=user)#update template context
     #now check if the meeting has started or not...?
     current_time= timezone.now()
@@ -118,6 +121,9 @@ def join_meeting(request: HttpRequest)-> HttpResponse:
 def delete_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
-    meeting_id= request.body
-    print(meeting_id)
-    return redirect('dashboard')
+    meeting_id= json.loads(request.body)
+    try:
+        Meeting.objects.get(meeting_id=meeting_id).delete()
+    except Exception as err:
+        return JsonResponse({"error" : err})
+    return JsonResponse({"deleted":"meeting successfully deleted!"})

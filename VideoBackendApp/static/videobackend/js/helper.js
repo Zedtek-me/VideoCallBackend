@@ -2,7 +2,7 @@ var csrf= document.cookie.split('=')[1]
 const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying meeting action choices on a meeting
     let removeIcons= document.querySelectorAll('.fa-xmark')
     let actionParents= document.querySelectorAll('.meeting-action-prompts')
-    for(let icon=0; icon<removeIcons.length; icon++){
+    for(let icon=0; icon<actionParents.length; icon++){
         removeIcons[icon].addEventListener('click', (e)=>{
             actionParents[icon].style.display='none'
         })
@@ -29,7 +29,7 @@ const handleSideMeetingClicks= ()=>{
             }
 
             else if(e.target.name === 'join-meeting'){//join
-                fetch('join/', {
+                fetch('http://127.0.0.1:9000/join/', {
                     method: 'POST',
                     body: JSON.stringify(meetingId),
                     headers:{
@@ -41,7 +41,7 @@ const handleSideMeetingClicks= ()=>{
             }
             else{//start
                 //Means start the meeting: do other things accordingly...
-                fetch('join/', {
+                fetch('http://127.0.0.1:9000/start/', {
                     method: 'POST',
                     body: JSON.stringify(meetingId),
                     headers:{

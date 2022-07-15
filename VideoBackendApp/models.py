@@ -88,7 +88,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return True
 
     def has_module_perms(self,app_label):
-        return True
+        return self.has_perm(app_label)
 
     def __str__(self):
         return self.username
