@@ -105,6 +105,7 @@ class Meeting(models.Model):
     password= models.CharField(max_length=100, unique=False, null=True, blank=True, default=uuid.uuid4)
     starting= models.DateTimeField(default=datetime.now(), max_length=200)
     ending= models.DateTimeField(default=datetime.now() + timedelta(minutes=30), max_length=200)
+    started = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -114,4 +115,4 @@ class Meeting(models.Model):
         return self.title
 
     class Meta:
-        permissions=[('can_start_meeting', 'can start a meeting'),('can_join_meeting', 'can join a meeting')]
+        permissions=[('can_start_meeting', 'can start a meeting'),('can_join_meeting', 'can join a meeting'), ('can_delete_meeting', 'can delete meeting')]

@@ -47,6 +47,7 @@ def signup(request):
             # confirm whether username has not been claimed by others.
             try:
                 user= User.videocon.create_user(email=email, username=username, name=name, surname=surname, password=password1)
+                user.user_permissions.add('VideoBackendApp.can_join_meeting')#let users have permissions to join meetings by default
                 messages.success(request, 'signup successful! You can login now.')
                 return redirect('home page')
             except IntegrityError:
@@ -71,14 +72,6 @@ def setting(request):
     msgs=messages.get_messages(request)
     return render(request, 'settings.html', context={'user': user, 'msgs':msgs}, content_type='text/html')
 
-# the meeting room view-> reserver for only loggedin users who have permissions to start a meeting, or have requested to join a meeting
-@login_required(login_url='home page')
-@permission_required(['VideoBackendApp.can_start_meeting', 'VideoBackendApp.can_join_meeting'], login_url='home page', raise_exception=True)
-def meeting(request):
-    user = request.user
-    msgs=messages.get_messages(request)
-    return render(request, 'meeting_room.html', context={'user': user, 'msgs':msgs}, content_type='text/html')
-
 def log_out(request):
     user= request.user
     logout(request)
@@ -86,29 +79,45 @@ def log_out(request):
     return redirect('home page')
 
 def schedule_meeting(request):#handles new meeting that is scheduled from the dashboard; returns back to the dashboard
+    user= request.user
     meeting_info= request.GET
     meeting= Meeting.objects.create(host=request.user, title=meeting_info.get('meeting-title'), password=meeting_info.get('meeting-pass'), starting= meeting_info.get('meeting-starting-date'), ending= meeting_info.get('meeting-ending-date'))
     messages.success(request, 'new meeting created!')
     return redirect('dashboard')
 
 # delete, join and start meeting functions defined below
+@login_required(login_url='home page')#the start meeting view: expected to direct user to the meeting page or redirect back to dashboard
 def start_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
-    meeting_id= request.body
-    print(meeting_id)
-    return redirect('meeeting_room')
+    meeting_id= request.body #gets the meeting id from request
+    db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
+    context.update(meeting= db_meeting, user=user)
+    if (db_meeting.host == user):#check if the user is the host, to determine whether to start the meeting for the user or ask him to join the ongoing meeting, if started.
+        return render(request, 'meeting_room.html', context)
+    else: 
+        messages.error(request, 'you can\'t start this meeting since you\'re not the host. Join meeting instead')
+        return redirect('dashboard')
 
 def join_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
-    meeting_id= request.body
-    print(meeting_id)
-    return redirect('meeeting_room')
+    meeting_id= request.body #gets the meeting id from request
+    db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
+    context.update(meeting= db_meeting, user=user)#update template context
+    #now check if the meeting has started or not...?
+    current_time= timezone.now()
+    if db_meeting.starting <= current_time and db_meeting.started:#the starting time isn't yet but the host has started it
+        return render(request, 'meeeting_room.html', context)
+    elif db_meeting.starting >= current_time and not db_meeting.started:#meeting should have probably started but host hasn't started it
+        messages.info(request, 'The host hasn\'t started this meeting yet. Kindly wait till the meeting starts.')
+    else:#meeting has likely expired and not restarted
+        messages.error(request, 'You can\'t join this meeting because it ended on %s, and hasn\'t been re-started by the host!'%db_meeting.ending)
+    return redirect('dashboard')
 
 def delete_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
     meeting_id= request.body
     print(meeting_id)
-    return redirect('meeeting_room')
+    return redirect('dashboard')

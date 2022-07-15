@@ -12,13 +12,12 @@ urlpatterns= [
     path('', views.home, name='home page'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('settings/', views.setting, name='profile settings'),
-    path('meeting_room/', views.meeting, name='meeting room'),
+    path('meeting_room/', views.start_meeting, name='meeting room'),
     path('sign_up/', views.signup, name='backend signup'),
     path('logout/', views.log_out, name='logout'),
-    path('schedule_meeting', views.schedule_meeting, name='new meeting'),
-    path('start', views.start_meeting, name='start meeting'),
-    path('join', views.join_meeting, name= 'join meeting'),
-    path('delete', views.delete_meeting, name= 'delete meeting'),
+    path('schedule_meeting/', views.schedule_meeting, name='new meeting'),
+    path('join/', views.join_meeting, name= 'join meeting'),
+    path('delete/', views.delete_meeting, name= 'delete meeting'),
 ]
 
 if settings.DEBUG:

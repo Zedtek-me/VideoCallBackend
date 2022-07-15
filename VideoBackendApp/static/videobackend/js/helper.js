@@ -1,3 +1,4 @@
+var csrf= document.cookie.split('=')[1]
 const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying meeting action choices on a meeting
     let removeIcons= document.querySelectorAll('.fa-xmark')
     let actionParents= document.querySelectorAll('.meeting-action-prompts')
@@ -12,16 +13,43 @@ const handleSideMeetingClicks= ()=>{
     let meetingIdz= document.querySelectorAll("input[name='meeting-id']")
     for(let i= 0; i<meetingChoices.length; i++){
         meetingChoices[i].addEventListener('click', (e)=>{
-            if(e.target.name === 'delete-meeting'){//checks what time of action is requwsted(delete, join, or start)
-               let meetingId=meetingIdz[i].value
-               console.log(meetingId)
+            //checks what time of action is requwsted(delete, join, or start)
+            let meetingId=meetingIdz[i].value
+            if(e.target.name === 'delete-meeting'){//delete
+               fetch('http://127.0.0.1:9000/delete/', {
+                method: 'POST',
+                body: JSON.stringify(meetingId),
+                headers:{
+                    'content-type': 'application/json',
+                    'X-CSRFTOKEN': csrf,
+                }
+               })
+               .then((resp)=>console.log(resp.data))
+               
             }
 
-            else if(e.target.name === 'join-meeting'){
-                //do something accordingly
+            else if(e.target.name === 'join-meeting'){//join
+                fetch('join/', {
+                    method: 'POST',
+                    body: JSON.stringify(meetingId),
+                    headers:{
+                        'content-type': 'application/json',
+                        'X-CSRFTOKEN': csrf,
+                    }
+                   })
+                   .then((resp)=>console.log(resp.data))
             }
-            else{
+            else{//start
                 //Means start the meeting: do other things accordingly...
+                fetch('join/', {
+                    method: 'POST',
+                    body: JSON.stringify(meetingId),
+                    headers:{
+                        'content-type': 'application/json',
+                        'X-CSRFTOKEN': csrf,
+                    }
+                   })
+                   .then((resp)=>console.log(resp.data))
             }
         })
     }

@@ -31,6 +31,7 @@
                             <div class="meeting-action-prompts">
                                 <p id="like-to-do">What would you like to do?<i class="fa-solid fa-xmark"></i></p>
                                 <div id="m-action-form">
+                                    <!-- checks if the user is the meeting scheduler, to decide meeting actions to display -->
                                     {%if meeting.host == user%}<input type="button" value="start meeting?" name="start-meeting" class="meeting-choice">
                                     <input type="button" value="delete this meeting" name="delete-meeting" class="meeting-choice delete-meeting">
                                     {%else%}<input type="button" value="join meeting" name="join-meeting" class="meeting-choice">{%endif%}
