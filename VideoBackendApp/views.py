@@ -12,7 +12,7 @@ import json
 # a utility function that returns an an iterable of scheduled and recent meetings
 def current_and_past_meetings():
     recent_meetings= Meeting.objects.filter(starting__lt=timezone.now())
-    upcoming_meetings= Meeting.objects.filter(ending__gt=timezone.now())
+    upcoming_meetings= Meeting.objects.filter(ending__gte=timezone.now())
     return recent_meetings, upcoming_meetings
 
 # functional views for requests and response (not meant to be consumed by the react frontend. Just dedicated, entirely to the host(domain) of this backend app.)
@@ -113,19 +113,27 @@ def join_meeting(request: HttpRequest)-> HttpResponse:
     context.update(meeting= db_meeting, user=user)#update template context
     #now check if the meeting has started or not...?
     current_time= timezone.now()
-    if db_meeting.starting <= current_time and db_meeting.started:#the starting time isn't yet but the host has started it
+    if (db_meeting.starting <= current_time and db_meeting.started) or (db_meeting.starting >= current_time and db_meeting.started):#the meeting time is due, and has been started, or the meeting time is yet, but has been started.
         return JsonResponse({"join": "can join the meeting"})
-    elif db_meeting.starting >= current_time and not db_meeting.started:#meeting should have probably started but host hasn't started it
-        return JsonResponse({"meeting_not_started": "host not started meeting"})
+    elif db_meeting.starting >= current_time and not db_meeting.started:#meeting starting time isn't yet, and host hasn't started meeting.
+        return JsonResponse({"meeting_not_started": "The host has not started this meeting."})
     else:#meeting has likely expired and not restarted
-        return JsonResponse({"meeting_ended": "the meeting has expired!"})
+        return JsonResponse({"meeting_ended": "This meeting has ended"})
 
 def delete_meeting(request: HttpRequest)-> HttpResponse:
     context= {}
     user= request.user
     meeting_id= json.loads(request.body)
     try:
-        Meeting.objects.get(meeting_id=meeting_id).delete()
+        db_meeting= Meeting.objects.get(meeting_id=meeting_id)
+        if db_meeting.host == user:
+            db_meeting.delete()
+        else: return JsonResponse({"not_authorized" :"you're not authorized to delete this meeting."})
     except Exception as err:
         return JsonResponse({"error" : err})
     return JsonResponse({"deleted":"meeting successfully deleted!"})
+
+
+# end meeting functionality below:
+def end_meeting(request):
+    pass

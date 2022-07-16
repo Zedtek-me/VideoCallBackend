@@ -1,6 +1,6 @@
 var csrf= document.cookie.split('=')[1]
 let hiddenMsg= document.querySelector('.hidden-msgs')
-let message = hiddenMsg
+let message = null
 const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying meeting action choices on a meeting
     let removeIcons= document.querySelectorAll('.fa-xmark')
     let actionParents= document.querySelectorAll('.meeting-action-prompts')
@@ -31,10 +31,24 @@ const handleSideMeetingClicks= ()=>{
                 if (data.deleted){
                     hiddenMsg.textContent= 'Meeting deleted successfully. reload to refresh page.'
                     hiddenMsg.style.backgroundColor= 'rgb(238, 201, 157)'
+                    hiddenMsg.style.color= 'white'
                     hiddenMsg.style.display= 'flex'
                     // window.location.pathname= 'dashboard/'
                 }
-                setTimeout(()=>message, 200)//displays the flash message for 2 seconds
+                else if (data.not_authorized){
+                    hiddenMsg.textContent= data.not_authorized
+                    hiddenMsg.style.backgroundColor= 'red'
+                    hiddenMsg.style.color= 'white'
+                    hiddenMsg.style.display= 'flex'
+                    
+                }
+                else{
+                    hiddenMsg.textContent= "error deleting this meeting. Try again later."
+                    hiddenMsg.style.backgroundColor= 'red'
+                    hiddenMsg.style.color= 'white'
+                    hiddenMsg.style.display= 'flex'
+                }
+                setTimeout(()=>hiddenMsg.style.display= "none", 6000)//displays the flash message for 2 seconds
                })
                
             }
@@ -66,7 +80,7 @@ const handleSideMeetingClicks= ()=>{
                         hiddenMsg.style.color= "white"
                         hiddenMsg.style.display="flex"
                     }})
-                    setTimeout(()=>message, 200)//displays the flash message for 2 seconds
+                    setTimeout(()=>hiddenMsg.style.display= "none", 6000)//displays the flash message for 2 seconds
                 }
             else{//start
                 //Means start the meeting: do other things accordingly...
@@ -89,7 +103,7 @@ const handleSideMeetingClicks= ()=>{
                         hiddenMsg.style.color="white"
                         hiddenMsg.style.display= "flex"
                     }
-                    setTimeout(()=>message, 200)//displays the flash message for 2 seconds
+                    setTimeout(()=>hiddenMsg.style.display= "none", 6000)//displays the flash message for 2 seconds
                 })
             }
         })
