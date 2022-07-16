@@ -61,8 +61,9 @@ const handleSideMeetingClicks= ()=>{
                         hiddenMsg.style.display= "flex"
                     }
                     else{
-                        hiddenMsg.textContent= "This meeting has ended!"
+                        hiddenMsg.textContent= "The meeting has ended!"
                         hiddenMsg.style.backgroundColor='red'
+                        hiddenMsg.style.color= "white"
                         hiddenMsg.style.display="flex"
                     }})
                     setTimeout(()=>message, 200)//displays the flash message for 2 seconds
