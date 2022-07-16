@@ -12,7 +12,7 @@ import json
 # a utility function that returns an an iterable of scheduled and recent meetings
 def current_and_past_meetings():
     recent_meetings= Meeting.objects.filter(starting__lt=timezone.now())
-    upcoming_meetings= Meeting.objects.filter(ending__gte=timezone.now())
+    upcoming_meetings= Meeting.objects.filter(starting__gte=timezone.now())
     return recent_meetings, upcoming_meetings
 
 # functional views for requests and response (not meant to be consumed by the react frontend. Just dedicated, entirely to the host(domain) of this backend app.)

@@ -15,7 +15,7 @@ const handleSideMeetingClicks= ()=>{
     let meetingIdz= document.querySelectorAll("input[name='meeting-id']")
     for(let i= 0; i<meetingChoices.length; i++){
         meetingChoices[i].addEventListener('click', (e)=>{
-            //checks what time of action is requwsted(delete, join, or start)
+            //checks what type of action is requested(delete, join, or start)
             let meetingId=meetingIdz[i].value
             if(e.target.name === 'delete-meeting'){//delete
                fetch('http://127.0.0.1:9000/delete/', {
