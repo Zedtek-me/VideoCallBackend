@@ -99,9 +99,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 # other tables start here
 class Meeting(models.Model):
+    '''
+    In this table, I use the meeting_id column as the primary key. The column is an instance of models.CharField, however, the value it holds would always be a uuid value.
+    I tried using the integer form of uuid on the column by calling and indexing the int attribute on the field, or by using the time_flow attribute.
+    I have resorted to the default uuid4 value. However, when I need to present this value to a user, I should remember to use the time_flow attribute on the field, in order to 
+    return ten integers.
+    '''
     host= models.ForeignKey(User, on_delete= models.CASCADE)
     title= models.CharField('meeting\'s title', max_length=700, unique=False, editable=True)
-    meeting_id= models.CharField('meeting id',max_length=10, unique=True , default=int(str(uuid.uuid1().int)[:10]), editable=False, primary_key=True)
+    meeting_id= models.CharField('meeting id',max_length=300, unique=True , default=uuid.uuid4, editable=False, primary_key=True)
     password= models.CharField(max_length=100, unique=False, null=True, blank=True, default=uuid.uuid4)
     starting= models.DateTimeField(default=datetime.now(), max_length=200)
     ending= models.DateTimeField(default=datetime.now() + timedelta(minutes=30), max_length=200)
