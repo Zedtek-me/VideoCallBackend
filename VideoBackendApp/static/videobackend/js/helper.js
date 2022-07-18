@@ -54,33 +54,35 @@ const handleSideMeetingClicks= ()=>{
             }
 
             else if(e.target.name === 'join-meeting'){//join
-                fetch('http://127.0.0.1:9000/join/', {
-                    method: 'POST',
-                    body: JSON.stringify(meetingId),
-                    headers:{
-                        'content-type': 'application/json',
-                        'X-CSRFTOKEN': csrf,
-                    }
-                   })
-                   .then((resp)=>resp.json())
-                   .then((data)=>{
-                    if (data.join){
-                        window.location.pathname= 'meeting_room/'
-                        
-                    }
-                    else if (data.meeting_not_started){
-                        hiddenMsg.textContent= data.meeting_not_started
-                        hiddenMsg.style.backgroundColor="red"
-                        hiddenMsg.style.color= "white"
-                        hiddenMsg.style.display= "flex"
-                    }
-                    else{
-                        hiddenMsg.textContent= "The meeting has ended!"
-                        hiddenMsg.style.backgroundColor='red'
-                        hiddenMsg.style.color= "white"
-                        hiddenMsg.style.display="flex"
-                    }})
+                if (meetingId){
+                    fetch('http://127.0.0.1:9000/join/', {
+                        method: 'POST',
+                        body: JSON.stringify(meetingId),
+                        headers:{
+                            'content-type': 'application/json',
+                            'X-CSRFTOKEN': csrf,
+                        }
+                    })
+                    .then((resp)=>resp.json())
+                    .then((data)=>{
+                        if (data.join){
+                            window.location.pathname= 'meeting_room/'
+                            
+                        }
+                        else if (data.meeting_not_started){
+                            hiddenMsg.textContent= data.meeting_not_started
+                            hiddenMsg.style.backgroundColor="red"
+                            hiddenMsg.style.color= "white"
+                            hiddenMsg.style.display= "flex"
+                        }
+                        else{
+                            hiddenMsg.textContent= "The meeting has ended!"
+                            hiddenMsg.style.backgroundColor='red'
+                            hiddenMsg.style.color= "white"
+                            hiddenMsg.style.display="flex"
+                        }})
                     setTimeout(()=>hiddenMsg.style.display= "none", 6000)//displays the flash message for 2 seconds
+                    }//end of the if in this block
                 }
             else{//start
                 //Means start the meeting: do other things accordingly...
@@ -113,6 +115,7 @@ const handleSideMeetingClicks= ()=>{
 
 handleSideMeetingClicks()//for meeting actions available on the side bar of dashboard
 removeMeetingAction()//removing box containing choices of actions that display when a meeting is clicked
+
 // flash messages removal
 let flashMsg= document.querySelector('.flash')
 let removeIcons= document.querySelector('.rmv-flash')
