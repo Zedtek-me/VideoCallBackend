@@ -174,7 +174,7 @@ html{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 97%;
     height: fit-content;
     border-radius: 8px;
     border: solid 1px black;
@@ -212,7 +212,7 @@ label.pass-hint{/*password container with the pass-cont and pass-hint paragraph*
 }
 /* found in the forms to give the forms some nice looks */
 .login-div form > div.opac-bg{
-    background: linear-gradient(to right, rgba(black, black, black, 0.8), white);
+    background-image: linear-gradient(to right, black, white);
     position: absolute;
     top: 0;
     right: 0;
@@ -220,6 +220,7 @@ label.pass-hint{/*password container with the pass-cont and pass-hint paragraph*
     bottom: 0;
     width:100%;
     height: 100%;
+    opacity: .9;
 }
 
 .login-div form >label, .pass-cont/*pass-cont is a container that holds password text and field, in order to enable me align the pass-hint well*/{
@@ -244,6 +245,7 @@ label>*, .pass-cont>*{
     border-radius:10px;
     background-color: rgb(212, 228, 233);
     color: black;
+    font-weight: 500;
 }
 .login-div form #login-btn, .login-div form #signup-btn{
     border: none;
@@ -264,7 +266,7 @@ label>*, .pass-cont>*{
 }
 
 /* footer */
-footer, .footer-cont{
+footer{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -274,7 +276,7 @@ footer, .footer-cont{
     color: white;
     width: 100%;
     padding:15px;
-    /* margin-top: 10%; */
+    margin-top: 10%;
     flex: 1 1 auto;
 }
 
