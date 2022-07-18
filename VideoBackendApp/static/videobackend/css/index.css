@@ -202,7 +202,7 @@ label.pass-hint{/*password container with the pass-cont and pass-hint paragraph*
     justify-content: flex-end;
     text-align: left;
     background-color: rgb(238, 201, 157);
-    font-weight: 300;
+    font-weight: 500;
     font-size: small;
     color:black;
     width:fit-content;
