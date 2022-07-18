@@ -202,7 +202,7 @@ label.pass-hint{/*password container with the pass-cont and pass-hint paragraph*
     justify-content: flex-end;
     text-align: left;
     background-color: rgb(238, 201, 157);
-    font-weight: 300;
+    font-weight: 500;
     font-size: small;
     color:black;
     width:fit-content;
@@ -212,7 +212,7 @@ label.pass-hint{/*password container with the pass-cont and pass-hint paragraph*
 }
 /* found in the forms to give the forms some nice looks */
 .login-div form > div.opac-bg{
-    background-image: linear-gradient(to right, black, white);
+    background-image: linear-gradient(to right, black, rgb(66, 65, 65));
     position: absolute;
     top: 0;
     right: 0;
@@ -483,6 +483,7 @@ input.delete-meeting{
     border-radius: 10px;
     opacity: 0;
     transition: all 0.8s ease;
+    position: absolute;
 }
 /* schedule meeting  toggle*/
 .toggleScheduleDisplay{
