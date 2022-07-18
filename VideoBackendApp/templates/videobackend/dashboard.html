@@ -14,7 +14,7 @@
                 <div class="msg {%if msg.tags%} {{msg.tags}}{%endif%} flash" title="my username">{{msg}}<i class="fa-solid fa-xmark rmv-flash"></i></div>
             {%endfor%}
         {%endif%}
-        <div class="json-msgs hidden-msgs"></div>
+        <div class="json-msgs hidden-msgs"></div><!--to be used by javascript frontend for flash messages-->
         <!-- meeting sector starts here -->
         <div class="meeting-sector absolute">
             <h2 id="meeting-info">Meeting Info:</h2><!--upcoming header-->

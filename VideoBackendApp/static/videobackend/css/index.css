@@ -348,7 +348,7 @@ footer{
     position: absolute;
     top: -10px;
     left: 0;
-    bottom: 0;
+    bottom: -150px;
     right: 70%;
     background-color: rgb(20, 20, 20);
     color:white;
