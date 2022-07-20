@@ -468,7 +468,7 @@ input.delete-meeting{
 }
 /* meeting scheduling form below */
 .schedule-meeting{/*form and paragraph container*/
-    display:flex;
+    display:none;
     flex-direction: column;
     color: white;
     text-align: center;
@@ -484,9 +484,11 @@ input.delete-meeting{
     opacity: 0;
     transition: all 0.8s ease;
     position: absolute;
+    top:30;
 }
 /* schedule meeting  toggle*/
 .toggleScheduleDisplay{
+    display: flex;
     opacity: 1;
 }
 .meeting-schedule-form{/*form itself*/
