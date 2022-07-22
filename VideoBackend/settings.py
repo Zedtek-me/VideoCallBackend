@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # custom apps/packages
     'VideoBackendApp.apps.VideobackendappConfig',
     'rest_framework',
     'corsheaders',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -77,10 +79,20 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'VideoBackend.wsgi.application'
+ASGI_APPLICATION= 'VideoBackend.asgi.application'#switch to asgi app
 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+CHANNEL_LAYRES= {#for channels inter-process communication
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', ("127.0.0.1", 6379))],
+        },
+    },
+}
 
 DATABASES = {
     'default': {
@@ -131,7 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIR= [os.path.join(BASE_DIR, 'VideoBackendApp/static/videbackend')]
+STATICFILES_DIRS= [os.path.join(BASE_DIR, 'VideoBackendApp/static/videobackend')]
 STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 # media files
 MEDIA_URL= 'media/'

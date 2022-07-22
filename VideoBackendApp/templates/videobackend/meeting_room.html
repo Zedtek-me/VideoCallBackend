@@ -8,8 +8,9 @@
 
 {%block content%}
     <div class="metting-room-cont">
+        <script src="{%static 'js/peercon_and_signal.js'%}"></script><!--just to test the websock conn.-->
         <div class="json-msgs hidden-msgs"></div><!--message from frontend-->
-        <video src="">
+        <video id="user-vid" autoplay>
             
         </video>
     </div>
