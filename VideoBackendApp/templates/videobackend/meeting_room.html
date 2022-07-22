@@ -8,10 +8,11 @@
 
 {%block content%}
     <div class="metting-room-cont">
-        <script src="{%static 'js/peercon_and_signal.js'%}"></script><!--just to test the websock conn.-->
         <div class="json-msgs hidden-msgs"></div><!--message from frontend-->
-        <video id="user-vid" autoplay>
+        <video id="user-vid" autoplay style="margin-top: 55%; border:solid 2px yellowgreen;">
             
         </video>
+        <button id="toggle-display">Turn Camera off</button>
+        <script src="{%static 'js/peercon_and_signal.js'%}"></script><!--just to test the websock conn.-->
     </div>
 {%endblock%}
