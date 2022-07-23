@@ -1,0 +1,52 @@
+/*styles for the meeting room*/
+.meeting-room-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    margin-top: 15%;
+}
+
+.meeting-credentials{/*container taking the labels for meeting id and pass*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 70%;
+    padding: 15px;
+    background-color: rgb(120, 175, 37);
+    color: white;
+    border: solid 2px black;
+}
+
+.meeting-credentials >label{/*labels in meeting credentials*/
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+}
+
+.meeting-credentials >label input, #join-meeting-btn{/*inputs in labels*/
+    width: 80%;
+    height: 30px;
+    border-radius:15px;
+    border: solid 2px black;
+    padding: 5px;
+}
+
+#join-meeting-btn{/*the btn to submit meeting credentials*/
+    width: 20%;
+    background-color: rgb(120, 175, 37);
+    color: white;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+#join-meeting-btn:hover{
+    background-color: rgb(99, 141, 37);/*darker color when join meeting btn is hovered*/
+}

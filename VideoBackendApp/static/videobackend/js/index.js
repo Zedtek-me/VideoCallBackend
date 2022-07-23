@@ -1,5 +1,3 @@
-import "./helper"
-
 const toggleMobile= ()=>{//hamburger toggling for mobile devices 
     let navBar= document.querySelector('.hamburger')
     let mobileNav= document.getElementsByClassName('mobile-nav')[0]
@@ -21,7 +19,6 @@ const toggleMeetingSchedule=()=>{//to toggle the display of the meeting scheduli
     let scheduleMeeting= document.querySelector('.schedule-meeting')
     scheduleBtn.addEventListener('click', (e)=>scheduleMeeting.classList.toggle('toggleScheduleDisplay'))
 }
-
 toggleMeetingSchedule()//displays/hide meeting scheduling form.
 meetingPrompt()//displaying box containing meeting action choices-> opposite of 'removeMeetingAction'
 toggleMobile()//for mobile

@@ -30,25 +30,26 @@ const handleSideMeetingClicks= ()=>{
                .then((data)=>{
                 if (data.deleted){
                     hiddenMsg.textContent= 'Meeting deleted successfully. reload to refresh page.'
-                    hiddenMsg.style.backgroundColor= 'rgb(238, 201, 157)'
+                    hiddenMsg.style.backgroundColor= 'yellowgreen'
                     hiddenMsg.style.color= 'white'
                     hiddenMsg.style.display= 'flex'
-                    // window.location.pathname= 'dashboard/'
                 }
-                else if (data.not_authorized){
+
+                else if (data.not_authorized){//not authorized to delete the meeting
                     hiddenMsg.textContent= data.not_authorized
                     hiddenMsg.style.backgroundColor= 'red'
                     hiddenMsg.style.color= 'white'
                     hiddenMsg.style.display= 'flex'
                     
                 }
-                else{
+
+                else{//other error occured
                     hiddenMsg.textContent= "error deleting this meeting. Try again later."
                     hiddenMsg.style.backgroundColor= 'red'
                     hiddenMsg.style.color= 'white'
                     hiddenMsg.style.display= 'flex'
                 }
-                setTimeout(()=>hiddenMsg.style.display= "none", 6000)//displays the flash message for 2 seconds
+                setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 4 seconds
                })
                
             }
@@ -65,7 +66,7 @@ const handleSideMeetingClicks= ()=>{
                     })
                     .then((resp)=>resp.json())
                     .then((data)=>{
-                        if (data.join){
+                        if (data.join){//can join meeting. Then, go to meeting page
                             window.location.pathname= 'meeting_room/'
                             
                         }
@@ -81,7 +82,7 @@ const handleSideMeetingClicks= ()=>{
                             hiddenMsg.style.color= "white"
                             hiddenMsg.style.display="flex"
                         }})
-                    setTimeout(()=>hiddenMsg.style.display= "none", 6000)//displays the flash message for 2 seconds
+                    setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 4 seconds
                     }//end of the if in this block
                 }
             else{//start
@@ -105,21 +106,45 @@ const handleSideMeetingClicks= ()=>{
                         hiddenMsg.style.color="white"
                         hiddenMsg.style.display= "flex"
                     }
-                    setTimeout(()=>hiddenMsg.style.display= "none", 6000)//displays the flash message for 2 seconds
+                    setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 2 seconds
                 })
             }
         })
     }
 }
 
-
-handleSideMeetingClicks()//for meeting actions available on the side bar of dashboard
-removeMeetingAction()//removing box containing choices of actions that display when a meeting is clicked
-
 // flash messages removal
-let flashMsg= document.querySelector('.flash')
-let removeIcons= document.querySelector('.rmv-flash')
-if (removeIcons){
+const rmvFlash= ()=>{
+    let flashMsg= document.querySelector('.flash')
+    let removeIcons= document.querySelector('.rmv-flash')
+    if (removeIcons){
     removeIcons.addEventListener('click', (e)=>flashMsg.style.display= 'none')
+    }
 }
 
+// meeting credentials handler
+const handleMeetingCredForm= ()=>{
+    let joinBtn= document.querySelector('#join-meeting-btn')
+    let ongoingMeetingId= document.querySelector('#join-meeting-id')
+    let ongoinMeetingPass= document.querySelector('#join-meeting-pass')
+    joinBtn.onclick= (e)=>{
+        e.preventDefault()
+        let meetingCred= {meetingId: ongoingMeetingId.value, meetingPass: ongoinMeetingPass.value}//collect meeting credentials
+        fetch('', {//send credentials to the backend for validation
+            method:'POST',
+            body: JSON.stringify(meetingCred),
+            headers:{
+                'Content-type' :'application/json',
+                'X-CSRFToken': csrf,
+            }
+        })
+        .then((resp)=> resp.json())
+        .then((data)=>{
+            //do some checks to confirm that can join meeting.
+        })
+    }
+}
+
+handleMeetingCredForm()//meeting credentials handler
+handleSideMeetingClicks()//for meeting actions available on the side bar of dashboard
+removeMeetingAction()//removing box containing choices of actions that display when a meeting is clicked

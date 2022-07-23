@@ -8,7 +8,7 @@ class UserSignal(AsyncWebsocketConsumer):
         user= self.scope.get('user')#gets current user
         await self.accept()
         self.connecting_users.append(user)#stores user in the list of connecting users
-        await super().send(json.dumps({'user':user.username}))#send name of the user to the frontend for awareness and processing.
+        await self.send(json.dumps({'user':user.username}))#send name of the user to the frontend for awareness and processing.
         # await self.channel_layer.group_add('Peers', self.channel_name)
 
     async def group_recv(self, text_data):#meant to broadcast between peers
@@ -19,7 +19,8 @@ class UserSignal(AsyncWebsocketConsumer):
         })
     
     async def user_rcv(self, event):#receive events from group broadcast, and send it back to the actual client, in its own tcp scope.
-        await self.send(text_data= event)
+        print(event, json.loads(event))
+        await self.send(text_data= json.loads(event))
 
 
     async def disconnet(self):

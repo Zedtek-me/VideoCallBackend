@@ -7,12 +7,17 @@
 {%block meeting%}{%endblock%}
 
 {%block content%}
-    <div class="metting-room-cont">
+    <div class="meeting-room-cont">
         <div class="json-msgs hidden-msgs"></div><!--message from frontend-->
-        <video id="user-vid" autoplay style="margin-top: 55%; border:solid 2px yellowgreen;">
-            
-        </video>
-        <button id="toggle-display">Turn Camera off</button>
-        <script src="{%static 'js/peercon_and_signal.js'%}"></script><!--just to test the websock conn.-->
+        <!-- to collect the id and password of the intended meeting -->
+        <div class="meeting-credentials">
+            <label for="Meeting Id" id="m-id" class="join-meeting-cred">
+                Meeting ID: <input type="text" name="join-meeting-id" placeholder="Type in the id of the meeting you want to join." id="join-meeting-id">
+            </label>
+            <label for="Meeting pass" id="m-pass" class="join-meeting-cred">
+                Meeting Password: <input type="password" name="join-meeting-pass" placeholder="The meeting password should go here." id="join-meeting-pass">
+            </label>
+            <button type="submit" name="join-meeting-btn" id="join-meeting-btn">Join</button>
+        </div>
     </div>
 {%endblock%}

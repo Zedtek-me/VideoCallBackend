@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,6 +9,7 @@
         <meta http-equiv="X-UA-Compatible">
         <meta name="Description" content="video confrencing application built by zedtek">
         <link rel="stylesheet" href="../../static/videobackend/css/index.css" type="text/css">
+        <link rel="stylesheet" href="../../static/videobackend/css/helper.css">
         <link rel="icon" href="../../static/videobackend/img/Video_conf_img.jpg" type="image/*">
     </head>
     <body>
@@ -49,7 +51,9 @@
         <div class="footer-cont">
             <p id="c-right">Copyright <i class="fa-solid fa-copyright"></i> 2022</p>
         </div>
-        <script src="../../static/videobackend/js/build/bundledIndex.js"></script>
+        <script src="{%static 'js/index.js'%}"></script>
+        <script src="{%static 'js/helper.js'%}"></script>
         <script src="https://kit.fontawesome.com/c676ebde69.js" crossorigin="anonymous"></script>
+        <script src="{%static 'js/peercon_and_signal.js'%}"></script><!--just to test the websock conn.-->
     </footer>
 </html>
