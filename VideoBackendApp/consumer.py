@@ -5,16 +5,20 @@ import json
 class UserSignal(AsyncWebsocketConsumer):
     connecting_users= []#stores all connecting users, to help distinguish where to send webrtc offer afterwards.
     async def connect(self):
-        user= self.scope.get(user)#gets current user
-        self.accept()
-        await self.connecting_users.append(user)#stores user in the list of connecting users
-        await self.send(json.dumps({'user':user}))#send user to the frontend for awareness and processing.
+        user= self.scope.get('user')#gets current user
+        await self.accept()
+        self.connecting_users.append(user)#stores user in the list of connecting users
+        await super().send(json.dumps({'user':user.username}))#send name of the user to the frontend for awareness and processing.
+        # await self.channel_layer.group_add('Peers', self.channel_name)
 
     async def group_recv(self, text_data):#meant to broadcast between peers
-        self.channel_layer.group_send()
-        pass
+        await self.channel_layer.group_send('Peers', {
+            'type' :'user.rcv',
+            'message':'Hey, you\'re connected.',
+            'user' : await self.scope.get('user')
+        })
     
-    async def websocket(self, event):#receive events from group broadcast, and send it back to the actual client, in its own tcp scope.
+    async def user_rcv(self, event):#receive events from group broadcast, and send it back to the actual client, in its own tcp scope.
         await self.send(text_data= event)
 
 

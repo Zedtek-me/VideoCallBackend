@@ -17,7 +17,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'VideoBackend.settings')
 
 application = ProtocolTypeRouter({# instantiates the asgi application for both websocket and http
     'http': get_asgi_application() ,#http
-    'ws' : AuthMiddlewareStack(#auth middleware(or initial view that expands request headers or attrs) for auth attributes like 'user', etc.
+    'websocket' : AuthMiddlewareStack(#auth middleware(or initial view that expands request headers or attrs) for auth attributes like 'user', etc.
         URLRouter(websocket_urlpatterns)#routes to my websocket url patterns, and pass requests from authmid., to my actual views.
     )
 })
