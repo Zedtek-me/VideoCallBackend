@@ -89,7 +89,7 @@ def schedule_meeting(request):#handles new meeting that is scheduled from the da
 
 # delete, join and start meeting functions defined below
 @login_required(login_url='home page')#the start meeting view: expected to direct user to the meeting page or redirect back to dashboard
-def start_meeting(request: HttpRequest)-> HttpResponse:
+def start_meeting(request: HttpRequest)-> JsonResponse:
     context= {}
     user= request.user
     if request.method == "POST":
@@ -104,23 +104,32 @@ def start_meeting(request: HttpRequest)-> HttpResponse:
     context.update(user=user)
     return render(request, 'meeting_room.html', context)
 
-def join_meeting(request: HttpRequest)-> HttpResponse:
+def join_meeting(request: HttpRequest)-> JsonResponse:
     context= {}
     user= request.user
-    meeting_id= json.loads(request.body) #gets the meeting id from request
-    db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
-    print(db_meeting.title)
-    context.update(meeting= db_meeting, user=user)#update template context
-    #now check if the meeting has started or not...?
-    current_time= timezone.now()
-    if (db_meeting.starting <= current_time and db_meeting.started) or (db_meeting.starting >= current_time and db_meeting.started):#the meeting time is due, and has been started, or the meeting time is yet, but has been started.
-        return JsonResponse({"join": "can join the meeting"})
-    elif db_meeting.starting >= current_time and not db_meeting.started:#meeting starting time isn't yet, and host hasn't started meeting.
-        return JsonResponse({"meeting_not_started": "The host has not started this meeting."})
-    else:#meeting has likely expired and not restarted
-        return JsonResponse({"meeting_ended": "This meeting has ended"})
+    print(request.headers)
+    if not ('To-Join-Meeting' in request.headers):#distinguish whether it's request from 'dahsboard' or from 'meeting'
+        meeting_id= json.loads(request.body) #gets the meeting id from request
+        db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
+        context.update(meeting= db_meeting, user=user)#update template context
+        #now check if the meeting has started or not...?
+        current_time= timezone.now()
+        if (db_meeting.starting <= current_time and db_meeting.started) or (db_meeting.starting >= current_time and db_meeting.started):#the meeting time is due, and has been started, or the meeting time is yet(starts in future), but has been started.
+            return JsonResponse({"join": "can join the meeting"})
+        elif db_meeting.starting >= current_time and not db_meeting.started:#meeting starting time isn't yet, and host hasn't started meeting.
+            return JsonResponse({"meeting_not_started": "The host has not started this meeting."})
+        else:#meeting has likely expired and not restarted
+            return JsonResponse({"meeting_ended": "This meeting has ended"})
+    # here runs if request originates from submitting meeting id to join meeting
+    print(request.headers.get('to_join_meeting'))#prints custom header I set, to verify
+    meeting_credentials= json.loads(request.body)
+    try:
+        meeting= Meeting.objects.get(**meeting_credentials)
+    except Meeting.DoesNotExist:
+        return JsonResponse({'doesNotExist':'Invalid Meeting Credentials.'})
+    print(meeting.title)
 
-def delete_meeting(request: HttpRequest)-> HttpResponse:
+def delete_meeting(request: HttpRequest)-> JsonResponse:
     context= {}
     user= request.user
     meeting_id= json.loads(request.body)

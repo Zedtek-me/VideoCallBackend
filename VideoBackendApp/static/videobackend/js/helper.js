@@ -129,19 +129,21 @@ const handleMeetingCredForm= ()=>{
     let ongoinMeetingPass= document.querySelector('#join-meeting-pass')
     joinBtn.onclick= (e)=>{
         e.preventDefault()
-        let meetingCred= {meetingId: ongoingMeetingId.value, meetingPass: ongoinMeetingPass.value}//collect meeting credentials
-        fetch('', {//send credentials to the backend for validation
+        let meetingCred= {meeting_id: ongoingMeetingId.value, password: ongoinMeetingPass.value}//collect meeting credentials
+        fetch('http://127.0.0.1:9000/join/', {//send credentials to the backend for validation
             method:'POST',
             body: JSON.stringify(meetingCred),
             headers:{
                 'Content-type' :'application/json',
                 'X-CSRFToken': csrf,
+                'To-Join-Meeting': true,
             }
         })
         .then((resp)=> resp.json())
         .then((data)=>{
-            //do some checks to confirm that can join meeting.
+            console.log(data)
         })
+        .catch((err)=>console.log('got error: ' + err))
     }
 }
 
