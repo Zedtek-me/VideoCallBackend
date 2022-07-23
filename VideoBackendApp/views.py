@@ -104,11 +104,11 @@ def start_meeting(request: HttpRequest)-> JsonResponse:
     context.update(user=user)
     return render(request, 'meeting_room.html', context)
 
-def join_meeting(request: HttpRequest)-> JsonResponse:
+def join_meeting(request: HttpRequest)-> JsonResponse:#I use this view to handle both the 'join meeting' btn at dashboard, and the 'join' btn at meeting room.
     context= {}
     user= request.user
-    print(request.headers)
-    if not ('To-Join-Meeting' in request.headers):#distinguish whether it's request from 'dahsboard' or from 'meeting'
+    #distinguish whether it's request from 'dahsboard' or from 'meeting' through a custom header, set as 'To-Join-Meeting' from the frontend
+    if not ('To-Join-Meeting' in request.headers):
         meeting_id= json.loads(request.body) #gets the meeting id from request
         db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
         context.update(meeting= db_meeting, user=user)#update template context
