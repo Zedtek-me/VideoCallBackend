@@ -87,6 +87,7 @@ def schedule_meeting(request):#handles new meeting that is scheduled from the da
     messages.success(request, 'new meeting created!')
     return redirect('dashboard')
 
+
 # delete, join and start meeting functions defined below
 @login_required(login_url='home page')#the start meeting view: expected to direct user to the meeting page or redirect back to dashboard
 def start_meeting(request: HttpRequest)-> JsonResponse:
@@ -103,6 +104,7 @@ def start_meeting(request: HttpRequest)-> JsonResponse:
             return JsonResponse({"not_host":"you can't start meeting, since you're not the host."})
     context.update(user=user)
     return render(request, 'meeting_room.html', context)
+
 
 def join_meeting(request: HttpRequest)-> JsonResponse:#I use this view to handle both the 'join meeting' btn at dashboard, and the 'join' btn at meeting room.
     context= {}
@@ -129,6 +131,7 @@ def join_meeting(request: HttpRequest)-> JsonResponse:#I use this view to handle
         return JsonResponse({'doesNotExist':'Invalid Meeting Credentials.'})
     print(meeting.title)
 
+
 def delete_meeting(request: HttpRequest)-> JsonResponse:
     context= {}
     user= request.user
@@ -141,7 +144,6 @@ def delete_meeting(request: HttpRequest)-> JsonResponse:
     except Exception as err:
         return JsonResponse({"error" : err})
     return JsonResponse({"deleted":"meeting successfully deleted!"})
-
 
 # end meeting functionality below:
 def end_meeting(request):
