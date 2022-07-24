@@ -1,7 +1,7 @@
 var csrf= document.cookie.split('=')[1]
 let hiddenMsg= document.querySelector('.hidden-msgs')
 let message = null
-const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying meeting action choices on a meeting
+export const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying meeting action choices on a meeting
     let removeIcons= document.querySelectorAll('.fa-xmark')
     let actionParents= document.querySelectorAll('.meeting-action-prompts')
     for(let icon=0; icon<actionParents.length; icon++){
@@ -10,7 +10,7 @@ const removeMeetingAction= ()=>{//icon to remove the dialogue box displaying mee
         })
 }
 }
-const handleSideMeetingClicks= ()=>{
+export const handleSideMeetingClicks= ()=>{
     let meetingChoices = document.querySelectorAll('.meeting-choice')//gets all the elements that are meant for deleting, starting or joining meetings
     let meetingIdz= document.querySelectorAll("input[name='meeting-id']")
     for(let i= 0; i<meetingChoices.length; i++){
@@ -127,38 +127,38 @@ const handleMeetingCredForm= ()=>{
     let joinBtn= document.querySelector('#join-meeting-btn')
     let ongoingMeetingId= document.querySelector('#join-meeting-id')
     let ongoinMeetingPass= document.querySelector('#join-meeting-pass')
-    joinBtn.onclick= (e)=>{
-        e.preventDefault()
-        let meetingCred= {meeting_id: ongoingMeetingId.value, password: ongoinMeetingPass.value}//collect meeting credentials
-        fetch('http://127.0.0.1:9000/join/', {//send credentials to the backend for validation
-            method:'POST',
-            body: JSON.stringify(meetingCred),
-            headers:{
-                'Content-type' :'application/json',
-                'X-CSRFToken': csrf,
-                'To-Join-Meeting': true,
-            }
-        })
-        .then((resp)=> resp.json())
-        .then((data)=>{
-            if(data.meeting){
-                let meetingDetails= data.meeting
-                setTimeout(()=>window.location.pathname='meeting_room', 1000)
-            }//meeting available
-
-            else{//no meeting with the given credentials
-                hiddenMsg.textContent= data.doesNotExist
-                hiddenMsg.style.backgroundColor= 'red'
-                hiddenMsg.style.color= 'white'
-                hiddenMsg.style.display= 'flex'
-                hiddenMsg.style.margin= '10px'
-            }
-        })
-        .catch((err)=>console.log('got error: ' + err))
-        setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 2 seconds
+    if(joinBtn){
+        joinBtn.onclick= (e)=>{
+            e.preventDefault()
+            let meetingCred= {meeting_id: ongoingMeetingId.value, password: ongoinMeetingPass.value}//collect meeting credentials
+            fetch('http://127.0.0.1:9000/join/', {//send credentials to the backend for validation
+                method:'POST',
+                body: JSON.stringify(meetingCred),
+                headers:{
+                    'Content-type' :'application/json',
+                    'X-CSRFToken': csrf,
+                    'To-Join-Meeting': true,
+                }
+            })
+            .then((resp)=> resp.json())
+            .then((data)=>{
+                if(data.meeting){
+                    let meetingDetails= data.meeting
+                    setTimeout(()=>window.location.pathname='meeting_room', 1000)
+                }//meeting available
+    
+                else{//no meeting with the given credentials
+                    hiddenMsg.textContent= data.doesNotExist
+                    hiddenMsg.style.backgroundColor= 'red'
+                    hiddenMsg.style.color= 'white'
+                    hiddenMsg.style.display= 'flex'
+                    hiddenMsg.style.margin= '10px'
+                }
+            })
+            .catch((err)=>console.log('got error: ' + err))
+            setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 2 seconds
+        }
     }
-}
+    }
 
 handleMeetingCredForm()//meeting credentials handler
-handleSideMeetingClicks()//for meeting actions available on the side bar of dashboard
-removeMeetingAction()//removing box containing choices of actions that display when a meeting is clicked
