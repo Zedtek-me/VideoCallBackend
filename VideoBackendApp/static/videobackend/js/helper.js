@@ -142,7 +142,8 @@ const handleMeetingCredForm= ()=>{
         .then((resp)=> resp.json())
         .then((data)=>{
             if(data.meeting){
-                //
+                let meetingDetails= data.meeting
+                setTimeout(()=>window.location.pathname='dashboard', 1000)
             }//meeting available
 
             else{//no meeting with the given credentials
