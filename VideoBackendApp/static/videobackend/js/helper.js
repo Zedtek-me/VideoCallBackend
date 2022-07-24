@@ -106,7 +106,7 @@ const handleSideMeetingClicks= ()=>{
                         hiddenMsg.style.color="white"
                         hiddenMsg.style.display= "flex"
                     }
-                    setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 2 seconds
+                    setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 4 seconds
                 })
             }
         })
@@ -122,7 +122,7 @@ const rmvFlash= ()=>{
     }
 }
 
-// meeting credentials handler
+// meeting credentials handler for meeting info form at the meeting page
 const handleMeetingCredForm= ()=>{
     let joinBtn= document.querySelector('#join-meeting-btn')
     let ongoingMeetingId= document.querySelector('#join-meeting-id')
@@ -141,9 +141,20 @@ const handleMeetingCredForm= ()=>{
         })
         .then((resp)=> resp.json())
         .then((data)=>{
-            console.log(data)
+            if(data.meeting){
+                //
+            }//meeting available
+
+            else{//no meeting with the given credentials
+                hiddenMsg.textContent= data.doesNotExist
+                hiddenMsg.style.backgroundColor= 'red'
+                hiddenMsg.style.color= 'white'
+                hiddenMsg.style.display= 'flex'
+                hiddenMsg.style.margin= '10px'
+            }
         })
         .catch((err)=>console.log('got error: ' + err))
+        setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 2 seconds
     }
 }
 

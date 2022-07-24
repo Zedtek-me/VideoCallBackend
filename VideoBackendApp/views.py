@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db import IntegrityError
 from django.utils import timezone
 import json
+from django.core.exceptions import ValidationError
 
 
 # a utility function that returns an an iterable of scheduled and recent meetings
@@ -123,13 +124,13 @@ def join_meeting(request: HttpRequest)-> JsonResponse:#I use this view to handle
         else:#meeting has likely expired and not restarted
             return JsonResponse({"meeting_ended": "This meeting has ended"})
     # here runs if request originates from submitting meeting id to join meeting
-    print(request.headers.get('to_join_meeting'))#prints custom header I set, to verify
-    meeting_credentials= json.loads(request.body)
+    meeting_credentials= json.loads(request.body)#gets meeting credentials(meeting_id and port)
     try:
         meeting= Meeting.objects.get(**meeting_credentials)
-    except Meeting.DoesNotExist:
+    except:
         return JsonResponse({'doesNotExist':'Invalid Meeting Credentials.'})
     print(meeting.title)
+    return JsonResponse({'meeting':[meeting.title, meeting.host.username, meeting.ending, meeting.starting]})
 
 
 def delete_meeting(request: HttpRequest)-> JsonResponse:

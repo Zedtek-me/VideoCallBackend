@@ -40,8 +40,8 @@
                                 </div>
                                 <!-- meeting credentials(Ip address and port) -->
                                 <div class="meeting-credential">
-                                    <p id="meeting-id-info">Meeting ID: <h2 id="id-value">{{meeting.meeting_id.time_low}}</h2></p>
-                                    <p id="meeting-pass-info">Meeting Pass: <h2 id="pass-value">{{meeting.password}}</h2></p>
+                                    <p id="meeting-id-info">Meeting ID: <h2 id="id-value" title="Copy this ID directly">{{meeting.meeting_id}}</h2></p>
+                                    <p id="meeting-pass-info">Meeting Pass: <h2 id="pass-value" title="Copy this password directly">{{meeting.password}}</h2></p>
                                 </div>
                             </div>
                         {%endfor%}

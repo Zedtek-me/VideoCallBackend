@@ -436,10 +436,21 @@ input.delete-meeting{
     font-size: 12px;
 }
 
-.meeting-credential,#meeting-id-info, #meeting-pass-info{
+.meeting-credential{/*meeting credentials container present at meeting action container*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+#id-value, #pass-value{/*id and password displayed for each meeting*/
     width: 100%;
-    font-size: 8px;
-    text-align: center;
+    font-size: 10px;
+    text-align: left;
+}
+
+#meeting-id-info, #meeting-pass-info{
+    margin: 4px;
+    padding: none;
 }
 
 /* profile info on the dashboard page */
