@@ -97,6 +97,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering=('email',)
 
 
+
+
 # other tables start here
 class Meeting(models.Model):
     '''
@@ -105,9 +107,16 @@ class Meeting(models.Model):
     I have resorted to the default uuid4 value. However, when I need to present this value to a user, I should remember to use the time_flow attribute on the field, in order to 
     return ten integers.
     '''
+    def generate_random_id():#random id generator for meeting
+        '''
+        intended for generating a random unique 10 integers as meeting ids
+        '''
+        import uuid
+        return uuid.uuid4().time_low
+
     host= models.ForeignKey(User, on_delete= models.CASCADE)
     title= models.CharField('meeting\'s title', max_length=700, unique=False, editable=True)
-    meeting_id= models.UUIDField('meeting id',max_length=300, unique=True , default=uuid.uuid4, editable=False, primary_key=True)
+    meeting_id= models.CharField('meeting id',max_length=300, unique=True , default=generate_random_id, editable=False, primary_key=True)
     password= models.CharField(max_length=100, unique=False, null=True, blank=True, default=uuid.uuid4)
     starting= models.DateTimeField(default=datetime.now(), max_length=200)
     ending= models.DateTimeField(default=datetime.now() + timedelta(minutes=30), max_length=200)
