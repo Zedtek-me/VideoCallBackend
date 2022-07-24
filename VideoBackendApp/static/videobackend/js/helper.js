@@ -145,7 +145,7 @@ const handleMeetingCredForm= ()=>{
                 if(data.meeting){
                     let meetingDetails= data.meeting
                     setTimeout(()=>window.location.pathname='meeting_room', 1000)
-                }//meeting available
+                }//meeting available redirect to meeting room.
     
                 else{//no meeting with the given credentials
                     hiddenMsg.textContent= data.doesNotExist
