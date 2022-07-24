@@ -1,5 +1,5 @@
 /*styles for the meeting room*/
-.meeting-room-cont{
+.meeting-room-cont,.meeting-cred-cont{
     display: flex;
     flex-direction: column;
     justify-content: center;

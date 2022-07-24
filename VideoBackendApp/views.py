@@ -132,6 +132,11 @@ def join_meeting(request: HttpRequest)-> JsonResponse:#I use this view to handle
     print(meeting.title)
     return JsonResponse({'meeting':[meeting.title, meeting.host.username, meeting.ending, meeting.starting]})
 
+def meeting_credentials(request):
+    '''
+    renders the meeting credential form
+    '''
+    return render(request, 'meeting_cred.html')
 
 def delete_meeting(request: HttpRequest)-> JsonResponse:
     context= {}

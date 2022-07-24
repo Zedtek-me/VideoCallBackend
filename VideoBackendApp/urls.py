@@ -17,6 +17,7 @@ urlpatterns= [
     path('logout/', views.log_out, name='logout'),
     path('schedule_meeting/', views.schedule_meeting, name='new meeting'),
     path('join/', views.join_meeting, name= 'join meeting'),
+    path('meeting_cred/', views.meeting_credentials, name= 'meeting cred'),
     path('delete/', views.delete_meeting, name= 'delete meeting'),
 ]
 

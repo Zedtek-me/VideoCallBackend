@@ -67,7 +67,7 @@ const handleSideMeetingClicks= ()=>{
                     .then((resp)=>resp.json())
                     .then((data)=>{
                         if (data.join){//can join meeting. Then, go to meeting page
-                            window.location.pathname= 'meeting_room/'
+                            window.location.pathname= 'meeting_cred'
                             
                         }
                         else if (data.meeting_not_started){
@@ -143,7 +143,7 @@ const handleMeetingCredForm= ()=>{
         .then((data)=>{
             if(data.meeting){
                 let meetingDetails= data.meeting
-                setTimeout(()=>window.location.pathname='dashboard', 1000)
+                setTimeout(()=>window.location.pathname='meeting_room', 1000)
             }//meeting available
 
             else{//no meeting with the given credentials
