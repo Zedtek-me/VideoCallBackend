@@ -38,6 +38,11 @@
                                     {%else%}<input type="button" value="join meeting" name="join-meeting" class="meeting-choice">{%endif%}
                                     <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
                                 </div>
+                                <!-- meeting credentials(Ip address and port) -->
+                                <div class="meeting-credential">
+                                    <p id="meeting-id-info">Meeting ID: <h2 id="id-value">{{meeting.meeting_id.time_low}}</h2></p>
+                                    <p id="meeting-pass-info">Meeting Pass: <h2 id="pass-value">{{meeting.password}}</h2></p>
+                                </div>
                             </div>
                         {%endfor%}
                     {%else%} <p id="no-meeting">You have no scheduled or upcoming meetings</p>

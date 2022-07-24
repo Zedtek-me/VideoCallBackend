@@ -436,6 +436,12 @@ input.delete-meeting{
     font-size: 12px;
 }
 
+.meeting-credential,#meeting-id-info, #meeting-pass-info{
+    width: 100%;
+    font-size: 8px;
+    text-align: center;
+}
+
 /* profile info on the dashboard page */
 .profile-info{
     display: flex;
