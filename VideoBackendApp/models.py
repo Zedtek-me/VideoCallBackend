@@ -131,3 +131,4 @@ class Meeting(models.Model):
 
     class Meta:
         permissions=[('can_start_meeting', 'can start a meeting'),('can_join_meeting', 'can join a meeting'), ('can_delete_meeting', 'can delete meeting')]
+        ordering= ['starting']
