@@ -22,6 +22,11 @@ function SignalServer(){
     socket.onmessage= (e)=>{
         let data= JSON.parse(e.data)
         console.log('connected user: ' + data.user)
+        
+        //perform 
+        if (data.message){
+
+        }
     }
 
 }
