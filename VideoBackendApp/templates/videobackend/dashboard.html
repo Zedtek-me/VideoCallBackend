@@ -58,7 +58,7 @@
                         <li id="meeting">
                             <h6 id="meeting-title">Title: {{meeting.title}}</h6>
                             <p id="host">Host: {%if meeting.host == request.user%} Me {%else%}{{meeting.host}}{%endif%}</p>
-                            <p id="date">Ended on: {{meeting.starting}}</p>
+                            <p id="date">Ended since {{meeting.starting|timesince}} ago</p>
                         </li>
                         <!-- prompts when clicked, confirming whether to start or delete meeting from dashboard -->
                         <div class="meeting-action-prompts">

@@ -2,7 +2,7 @@
  * This module contains functions for users joining and starting a video meeting call.
  */
 
-"stun3.l.google.com:19302" //google stun3 server socket I'll use later to get my ICE candidate(my public socket-> (ip and port), and my network's NAT type)
+let stunUrl= "stun3.l.google.com:19302" //google stun3 server socket I'll use later to get my ICE candidate(my public socket-> (ip and port), and my network's NAT type)
 //set up my signaling server with websocket to determine interraction type and communicate ICE candidates and SDPs accordingly.
 function SignalServer(){
     let webSocProtocol;// controls whether the connection is secure or not
