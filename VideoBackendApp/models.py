@@ -9,7 +9,7 @@ import uuid
 class UserManager(BaseUserManager):
     def create_user(self, email, name, surname, username, password= None):
         if not email:
-            raise ValidationError("You must include a username for this user!")
+            raise ValidationError("You must include an email for this user!")
         user= self.model(email= self.normalize_email(email), name= name, surname= surname, username= username)
         user.set_password(password)
         user.save()

@@ -9,6 +9,13 @@
 {%block content%}
     <div class="meeting-room-cont">
         <div class="json-msgs hidden-msgs"></div><!--message from frontend-->
-        
+        <!-- <div id="host-status" style="display: none;">
+            {{host_status}}
+        </div> -->
+
+        <div class="videoDispCont">
+            <!-- holds all the video elements for each connected user -->
+        </div>
     </div>
+    {%block script%} <script src="{%static 'js/peercon_and_signal.js'%}"></script>{%endblock%}
 {%endblock%}

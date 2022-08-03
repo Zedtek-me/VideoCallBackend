@@ -50,3 +50,11 @@
 #join-meeting-btn:hover{
     background-color: rgb(99, 141, 37);/*darker color when join meeting btn is hovered*/
 }
+
+/* styling user videos here */
+#user-vid{/*for videos dynamically created at peerconnection*/
+    width:35%;
+    height: 35%;
+    border-radius:15px;
+    border:solid 1px rgb(120, 175, 37);
+}

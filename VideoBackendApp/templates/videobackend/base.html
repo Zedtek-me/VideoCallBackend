@@ -55,6 +55,6 @@
         <script src="{%static 'js/helper.js'%}"></script> -->
         <script src="{%static 'js/build/bundledIndex.js'%}"></script>
         <script src="https://kit.fontawesome.com/c676ebde69.js" crossorigin="anonymous"></script>
-        <script src="{%static 'js/peercon_and_signal.js'%}"></script><!--just to test the websock conn.-->
+        {%block script%}<!-- for custom scripts in any page-->{%endblock%}
     </footer>
 </html>

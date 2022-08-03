@@ -18,7 +18,7 @@ export const handleSideMeetingClicks= ()=>{
             //checks what type of action is requested(delete, join, or start)
             let meetingId=meetingIdz[i].value
             if(e.target.name === 'delete-meeting'){//delete
-               fetch('http://127.0.0.1:9000/delete/', {
+               fetch(`${window.location.host}/delete/`, {
                 method: 'POST',
                 body: JSON.stringify(meetingId),
                 headers:{
@@ -56,7 +56,7 @@ export const handleSideMeetingClicks= ()=>{
 
             else if(e.target.name === 'join-meeting'){//join
                 if (meetingId){
-                    fetch('http://127.0.0.1:9000/join/', {
+                    fetch(`${window.location.host}/join/`, {
                         method: 'POST',
                         body: JSON.stringify(meetingId),
                         headers:{
@@ -87,7 +87,7 @@ export const handleSideMeetingClicks= ()=>{
                 }
             else{//start
                 //Means start the meeting: do other things accordingly...
-                fetch('http://127.0.0.1:9000/meeting_room/', {
+                fetch(`${window.location.host}/meeting_room/`, {
                     method: 'POST',
                     body: JSON.stringify(meetingId),
                     headers:{
@@ -98,9 +98,9 @@ export const handleSideMeetingClicks= ()=>{
                 .then((resp)=>resp.json())
                 .then((data)=>{
                     if (data.start){
-                        window.location.pathname= "meeting_room"
+                        setTimeout(()=>window.location.pathname= "meeting_room", 1000)//eligible to start the meeting.
                     }
-                    else{
+                    else{//not the host
                         hiddenMsg.textContent= data.not_host
                         hiddenMsg.style.backgroundColor="red"
                         hiddenMsg.style.color="white"
@@ -131,7 +131,7 @@ const handleMeetingCredForm= ()=>{
         joinBtn.onclick= (e)=>{
             e.preventDefault()
             let meetingCred= {meeting_id: ongoingMeetingId.value, password: ongoinMeetingPass.value}//collect meeting credentials
-            fetch('http://127.0.0.1:9000/join/', {//send credentials to the backend for validation
+            fetch(`${window.location.host}/join/`, {//send credentials to the backend for validation
                 method:'POST',
                 body: JSON.stringify(meetingCred),
                 headers:{
@@ -156,9 +156,10 @@ const handleMeetingCredForm= ()=>{
                 }
             })
             .catch((err)=>console.log('got error: ' + err))
-            setTimeout(()=>hiddenMsg.style.display= "none", 4000)//displays the flash message for 2 seconds
+            setTimeout(()=>hiddenMsg.style.display= "none", 2000)//displays the flash message for 2 seconds
         }
     }
     }
 
+rmvFlash()
 handleMeetingCredForm()//meeting credentials handler

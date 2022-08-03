@@ -98,12 +98,15 @@ def start_meeting(request: HttpRequest)-> JsonResponse:
         meeting_id= json.loads(request.body) #gets the meeting id from request
         db_meeting= Meeting.objects.get(meeting_id= meeting_id)# get meeting from db with its id
         if (db_meeting.host == user):#check if the user is the host, to determine whether to start the meeting for the user or ask him to join the ongoing meeting, if started.
-            db_meeting.started= True
+            db_meeting.started= True #start meeting
+            user.is_host = True #make change user host status
+            user.save()
             db_meeting.save()
             return JsonResponse({"start": "can start meeting"})
         else: 
             return JsonResponse({"not_host":"you can't start meeting, since you're not the host."})
-    context.update(user=user)
+    is_host= user.is_host#gets the type of user requesting this page (host or guest), to know what to create(offer or answer)
+    context.update(user=user, host_status=is_host)
     return render(request, 'meeting_room.html', context)
 
 
@@ -129,7 +132,6 @@ def join_meeting(request: HttpRequest)-> JsonResponse:#I use this view to handle
         meeting= Meeting.objects.get(**meeting_credentials)
     except:
         return JsonResponse({'doesNotExist':'Invalid Meeting Credentials.'})
-    print(meeting.title)
     return JsonResponse({'meeting':[meeting.title, meeting.host.username, meeting.ending, meeting.starting]})
 
 def meeting_credentials(request):
