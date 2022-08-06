@@ -1,4 +1,3 @@
-import asgiref.sync as sync_toggle #to toggle between sync and async interfaces
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 
@@ -20,7 +19,7 @@ class UserSignal(AsyncWebsocketConsumer):
     
     async def user_rcv(self, event):#receive events from group broadcast, and send it back to the actual client, in its own tcp scope.
         print(event, json.loads(event))
-        await self.send(text_data= json.loads(event))
+        await self.send(text_data= json.loads(event.get('message')))#sends the message sent to the group, to a user
 
 
     async def disconnet(self):
