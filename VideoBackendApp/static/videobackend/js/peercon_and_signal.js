@@ -54,7 +54,7 @@ function SignalServerAndVideoConn(){
     }
 
     socket.onclose= (e)=>{
-        vidDisplayContainer.removeChild()
+        vidDisplayContainer.removeChild(vidEl)
     }
 
 }
