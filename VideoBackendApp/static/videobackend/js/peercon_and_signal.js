@@ -63,6 +63,10 @@ function SignalServerAndVideoConn(){
         else{
             console.log('other messages were sent, apart from offers and answers.')
         }
+        //listen for when the ICE candidates(public socket/IP Address and Port number) are ready
+        peerConn.onicecandidate= (e)=>{
+            socket.send(JSON.stringify())
+        }
     }
 
     socket.onclose= (e)=>{
