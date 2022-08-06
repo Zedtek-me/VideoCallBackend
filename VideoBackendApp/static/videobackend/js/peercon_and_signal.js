@@ -36,20 +36,32 @@ function SignalServerAndVideoConn(){
         vidDisplayContainer.appendChild(vidEl)
     }
 
-    socket.onmessage= async (e)=>{
+    socket.onmessage= async (e)=>{// when a message is detected, check whether it's an offer or an answer. Then, perform acts accordingly.
         let data= JSON.parse(e.data)
         let user= data.user
         let isHost= data.host_status// as gotten from the websocket server on the backend 
-        console.log(isHost)
-        if (isHost){
+        //deciding whether to create an answer or an offer.
+        if (isHost){ //the host being the caller
             let offer = await peerConn.createOffer()//create offer 
             peerConn.setLocalDescription(offer)//set to local description
-            console.log(offer)
             setTimeout(()=>{socket.send(JSON.stringify({'offer': offer}))}, 1000)
         }
-        //perform 
-        if (data.message){
-            console.log(data.message)
+        else{// this person is the callee, not the host/caller.
+            let answer= peerConn.createAnswer()
+            peerConn.setLocalDescription(answer)//set my answer as my local description
+            socket.send(JSON.stringify({'answer':answer}))//send my answer to the offerer
+        }
+        //listening for the answer or offer of the remote peer
+        if (data.answer){// then answer has been sent for my offer
+            let remoteAnswer = new RTCSessionDescription(JSON.parse(data.answer))
+            peerConn.setRemoteDescription(remoteAnswer)
+        }
+        else if(data.offer){
+            let remoteOffer= new RTCSessionDescription(JSON.parse(data.offer))
+            peerConn.setRemoteDescription(remoteOffer)
+        }
+        else{
+            console.log('other messages were sent, apart from offers and answers.')
         }
     }
 

@@ -11,9 +11,10 @@ class UserSignal(AsyncWebsocketConsumer):
         # await self.channel_layer.group_add('Peers', self.channel_name)
 
     async def group_recv(self, text_data):#meant to broadcast among peers
+        json_data= json.loads(text_data)
         await self.channel_layer.group_send('Peers', {
             'type' :'user.rcv',
-            'message':'Hey, you\'re connected.',
+            'offer' if json_data.get('offer') else "answer":json_data.get('offer') if json_data.get('offer') else json_data.get('answer'), #used ternary operator to get the response from backend for offer/answer.
             'user' : await self.scope.get('user')
         })
     
