@@ -10,6 +10,7 @@ function SignalServerAndVideoConn(){
     let webSocProtocol;// controls whether the connection is secure or not
     let offer;//setting variables in the global scope for access in the child scopes
     let answer;
+    let vidEl;
     // check the schema of the current http protocol before instanciating the websocket client
     if (window.location.origin.split(':')[0] === 'http'){
         webSocProtocol = 'ws'
@@ -25,15 +26,20 @@ function SignalServerAndVideoConn(){
     // instantiate RTCPeerConnection Here 
     let peerConn= new RTCPeerConnection(stunConfig)
     socket.onopen= async (e)=>{
-        /**when the connection is open here, create the video element for the user, and start getting their media stream
+        /**when the websocket connection is open here, create the video element for the user, and start getting their media stream
          * before other things come on
         */
-        var vidEl= document.createElement('VIDEO')//video element created and id is set on it
+        vidEl= document.createElement('VIDEO')//video element created and id is set on it
         vidEl.id= 'user-vid'
         vidEl.autoplay= 'true'
         let mediaStream= await navigator.mediaDevices.getUserMedia({video:true, audio:true})//get user media stream and add it to vidEl
         vidEl.srcObject =mediaStream
         vidDisplayContainer.appendChild(vidEl)
+        //get media tracks here, and start adding them to the connection session immediately without waiting for an offer or answer
+        let localStream= mediaStream.getTracks()
+        localStream.map((track)=>{
+            peerConn.addTrack(track, mediaStream)
+        })
     }
 
     socket.onmessage= async (e)=>{// when a message is detected, check whether it's an offer or an answer. Then, perform acts accordingly.
@@ -42,26 +48,35 @@ function SignalServerAndVideoConn(){
         let isHost= data.host_status// as gotten from the websocket server on the backend 
         //deciding whether to create an answer or an offer.
         if (isHost){ //the host being the caller
+            if(data.answer){
+                let remoteSession= new RTCSessionDescription(data.answer)
+                peerConn.setRemoteDescription(remoteSession)
+                peerConn.addEventListener('track', (e)=>{
+                    //first, create the remote video when the client starts sending track
+                    let remoteVideo= document.createElement('VIDEO')
+                    remoteVideo.id= 'remote-vid'
+                    // the next thing to do here is to start adding remote tracks as the source objects for this video element. I'll come back to this.
+                })
+            }
             let offer = await peerConn.createOffer()//create offer 
             peerConn.setLocalDescription(offer)//set to local description
-            setTimeout(()=>{socket.send(JSON.stringify({'offer': offer}))}, 1000)
+            setTimeout(()=>socket.send(JSON.stringify({'offer': offer})), 1000)
         }
         else{// this person is the callee, not the host/caller.
+            //listening for the offer of the reomte peer.
+            if (data.offer){// an offer has been sent, then
+                let remoteOffer = new RTCSessionDescription(data.offer)
+                peerConn.setRemoteDescription(remoteOffer)
+                peerConn.addEventListener('track', (e)=>{
+                    //first, create the remote video when the client starts sending track
+                    let remoteVideo= document.createElement('VIDEO')
+                    remoteVideo.id= 'remote-vid'
+                    // the next thing to do here is to start adding remote tracks as the source objects for this video element. I'll come back to this.
+                })
+            }
             let answer= peerConn.createAnswer()
             peerConn.setLocalDescription(answer)//set my answer as my local description
             socket.send(JSON.stringify({'answer':answer}))//send my answer to the offerer
-        }
-        //listening for the answer or offer of the remote peer
-        if (data.answer){// then answer has been sent for my offer
-            let remoteAnswer = new RTCSessionDescription(JSON.parse(data.answer))
-            peerConn.setRemoteDescription(remoteAnswer)
-        }
-        else if(data.offer){
-            let remoteOffer= new RTCSessionDescription(JSON.parse(data.offer))
-            peerConn.setRemoteDescription(remoteOffer)
-        }
-        else{
-            console.log('other messages were sent, apart from offers and answers.')
         }
         //listen for when the ICE candidates(public socket/IP Address and Port number) are ready
         peerConn.onicecandidate= (e)=>{
