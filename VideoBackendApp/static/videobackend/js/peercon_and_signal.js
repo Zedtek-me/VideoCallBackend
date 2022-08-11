@@ -55,14 +55,20 @@ function SignalServerAndVideoConn(){
                     //first, create the remote video when the client starts sending track
                     let remoteVideo= document.createElement('VIDEO')
                     remoteVideo.id= 'remote-vid'
-                    // the next thing to do here is to start adding remote tracks as the source objects for this video element. I'll come back to this.
+                    //get the streams and set it to the newly created videoelement.
+                    let remoteStreams= e.streams
+                    remoteVideo.srcObject= remoteStreams
+                    vidDisplayContainer.appendChild(remoteVideo)
                 })
+                
             }
             let offer = await peerConn.createOffer()//create offer 
             peerConn.setLocalDescription(offer)//set to local description
             setTimeout(()=>socket.send(JSON.stringify({'offer': offer})), 1000)
         }
-        else{// this person is the callee, not the host/caller.
+        
+        // this person is the callee, not the host/caller.
+        else{
             //listening for the offer of the reomte peer.
             if (data.offer){// an offer has been sent, then
                 let remoteOffer = new RTCSessionDescription(data.offer)
@@ -71,7 +77,10 @@ function SignalServerAndVideoConn(){
                     //first, create the remote video when the client starts sending track
                     let remoteVideo= document.createElement('VIDEO')
                     remoteVideo.id= 'remote-vid'
-                    // the next thing to do here is to start adding remote tracks as the source objects for this video element. I'll come back to this.
+                    //get the streams and set it to the newly created videoelement.
+                    let remoteStreams= e.streams
+                    remoteVideo.srcObject= remoteStreams
+                    vidDisplayContainer.appendChild(remoteVideo)
                 })
             }
             let answer= peerConn.createAnswer()
