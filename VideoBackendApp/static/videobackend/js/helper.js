@@ -22,8 +22,8 @@ export const handleSideMeetingClicks= ()=>{
                 method: 'POST',
                 body: JSON.stringify(meetingId),
                 headers:{
-                    'content-type': 'application/json',
-                    'X-CSRFTOKEN': csrf,
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrf,
                 }
                })
                .then((resp)=>resp.json())

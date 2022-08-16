@@ -43,7 +43,7 @@ function SignalServerAndVideoConn(){
     socket.onmessage= async (e)=>{// when a message is detected, check whether it's an offer or an answer. Then, perform acts accordingly.
         let data= JSON.parse(e.data)
         let user= data.user
-        let isHost= data.host_status// as gotten from the websocket server on the backend 
+        let isHost= data.host_status ? data.host_status : '' // as gotten from the websocket server on the backend 
         //deciding whether to create an answer or an offer.
         if (isHost){ //the host being the caller
             if(data.answer){

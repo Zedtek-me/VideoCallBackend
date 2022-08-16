@@ -1,13 +1,12 @@
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import User, Meeting
-from django.contrib.auth.decorators import login_required, permission_required
+from VideoBackendApp.models import User, Meeting
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.utils import timezone
 import json
-from django.core.exceptions import ValidationError
 
 
 # a utility function that returns an an iterable of scheduled and recent meetings
@@ -144,6 +143,7 @@ def delete_meeting(request: HttpRequest)-> JsonResponse:
     context= {}
     user= request.user
     meeting_id= json.loads(request.body)
+    print(meeting_id)
     try:
         db_meeting= Meeting.objects.get(meeting_id=meeting_id)
         if db_meeting.host == user:
