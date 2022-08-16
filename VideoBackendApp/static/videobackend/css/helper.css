@@ -73,7 +73,8 @@
     align-self: center;
 }
 
-#user-vid{/*for videos dynamically created at peerconnection*/
+#user-vid, #remote-vid{/*the user vid and remote videos*/
+    display:none;
     width:100%;
     height: 100%;
     border-radius:25px;

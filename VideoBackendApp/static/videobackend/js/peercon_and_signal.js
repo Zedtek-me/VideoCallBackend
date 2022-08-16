@@ -7,6 +7,7 @@ var stunConfig= {'iceServer':[{'urls':"stun3.l.google.com:19302"}]} //google stu
 function SignalServerAndVideoConn(){
     // let isHost = document.getElementById('host-status')//to get the host status, as passed down into the context of meeting_room.html
     let vidDisplayContainer= document.querySelector('.gridDisp')
+    let localVid= doucument.querySelector('#user-vid')
     let webSocProtocol;// controls whether the connection is secure or not
     let offer;//setting variables in the global scope for access in the child scopes
     let answer;
@@ -29,12 +30,9 @@ function SignalServerAndVideoConn(){
         /**when the websocket connection is open here, create the video element for the user, and start getting their media stream
          * before other things come on
         */
-        vidEl= document.createElement('VIDEO')//video element created and id is set on it
-        vidEl.id= 'user-vid'
-        vidEl.autoplay= 'true'
         let mediaStream= await navigator.mediaDevices.getUserMedia({video:true, audio:true})//get user media stream and add it to vidEl
-        vidEl.srcObject =mediaStream
-        vidDisplayContainer.appendChild(vidEl)
+        localVid.srcObject =mediaStream// give the local vide element the incoming stream
+        localVid.style.display= 'flex'
         //get media tracks here, and start adding them to the connection session immediately without waiting for an offer or answer
         let localStream= mediaStream.getTracks()
         localStream.map((track)=>{
@@ -51,17 +49,8 @@ function SignalServerAndVideoConn(){
             if(data.answer){
                 let remoteSession= new RTCSessionDescription(data.answer)
                 peerConn.setRemoteDescription(remoteSession)
-                peerConn.addEventListener('track', (e)=>{
-                    //first, create the remote video when the client starts sending track
-                    let remoteVideo= document.createElement('VIDEO')
-                    remoteVideo.id= 'remote-vid'
-                    //get the streams and set it to the newly created videoelement.
-                    let remoteStreams= e.streams
-                    remoteVideo.srcObject= remoteStreams
-                    vidDisplayContainer.appendChild(remoteVideo)
-                })
-                
             }
+            // create offer if it's not an answer
             let offer = await peerConn.createOffer()//create offer 
             peerConn.setLocalDescription(offer)//set to local description
             setTimeout(()=>socket.send(JSON.stringify({'offer': offer})), 1000)
@@ -73,23 +62,28 @@ function SignalServerAndVideoConn(){
             if (data.offer){// an offer has been sent, then
                 let remoteOffer = new RTCSessionDescription(data.offer)
                 peerConn.setRemoteDescription(remoteOffer)
-                peerConn.addEventListener('track', (e)=>{
-                    //first, create the remote video when the client starts sending track
-                    let remoteVideo= document.createElement('VIDEO')
-                    remoteVideo.id= 'remote-vid'
-                    //get the streams and set it to the newly created videoelement.
-                    let remoteStreams= e.streams
-                    remoteVideo.srcObject= remoteStreams
-                    vidDisplayContainer.appendChild(remoteVideo)
-                })
+                //first, get my own media streams, and then add them to the local video element
+                let answerStreams= await navigator.mediaDevices.getUSerMedia({video:true, audio:true})
+                localVid.srcObject= answerStreams
+                //now create my answer to the offer 
+                let answer= peerConn.createAnswer()
+                peerConn.setLocalDescription(answer)//set my answer as my local description
+                socket.send(JSON.stringify({'answer':answer}))//send my answer to the offerer
+
             }
-            let answer= peerConn.createAnswer()
-            peerConn.setLocalDescription(answer)//set my answer as my local description
-            socket.send(JSON.stringify({'answer':answer}))//send my answer to the offerer
         }
-        //listen for when the ICE candidates(public socket/IP Address and Port number) are ready
-        peerConn.onicecandidate= (e)=>{
+        //listen for other RTC events here
+        peerConn.onicecandidate= (e)=>{//ICE candidates (IP and PORTS combined)
             socket.send(JSON.stringify())
+        }
+
+        peerConn.track= (e)=>{ //when remote tracks come in 
+            //create remote video and start adding the incoming media streams
+            let remoteVid= document.createElement('VIDEO')
+            remoteVid.id= 'remote-vid'
+            remoteVid.autoplay= true
+            let remoteTracks= e.streams
+            remoteVid.srcObject= remoteTracks
         }
     }
 
@@ -100,3 +94,12 @@ function SignalServerAndVideoConn(){
 }
 
 SignalServerAndVideoConn()
+
+
+
+
+
+
+
+
+
