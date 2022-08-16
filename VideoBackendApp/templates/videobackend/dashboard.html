@@ -39,7 +39,7 @@
                                     {%else%}<input type="button" value="join meeting" name="join-meeting" class="meeting-choice">{%endif%}
                                     <input type="hidden" value="{{meeting.meeting_id}}" name="meeting-id">
                                 </div>
-                                <!-- meeting credentials(Ip address and port) -->
+                                <!-- meeting credentials(ID and password) -->
                                 <div class="meeting-credential">
                                     <p id="meeting-id-info">Meeting ID: <h2 id="id-value" title="Copy this ID directly">{{meeting.meeting_id}}</h2></p>
                                     <p id="meeting-pass-info">Meeting Pass: <h2 id="pass-value" title="Copy this password directly">{{meeting.password}}</h2></p>
