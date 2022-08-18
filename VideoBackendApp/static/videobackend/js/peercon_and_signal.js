@@ -7,11 +7,11 @@ var stunConfig= {'iceServer':[{'urls':"stun3.l.google.com:19302"}]} //google stu
 function SignalServerAndVideoConn(){
     // let isHost = document.getElementById('host-status')//to get the host status, as passed down into the context of meeting_room.html
     let vidDisplayContainer= document.querySelector('.gridDisp')
-    let localVid= doucument.querySelector('#user-vid')
+    let localVid= document.querySelector('#user-vid')
+    let remoteVid; //set this to hold the remote video element when it'll be created soon.
     let webSocProtocol;// controls whether the connection is secure or not
-    let offer;//setting variables in the global scope for access in the child scopes
+    let offer;//I'll use this offers and answers created elsewhere, in case of invite to the and removal from/to the meeting
     let answer;
-    let vidEl;
     // check the schema of the current http protocol before instanciating the websocket client
     if (window.location.origin.split(':')[0] === 'http'){
         webSocProtocol = 'ws'
@@ -28,7 +28,9 @@ function SignalServerAndVideoConn(){
     let peerConn= new RTCPeerConnection(stunConfig)
     socket.onopen= async (e)=>{
         /**when the websocket connection is open here, create the video element for the user, and start getting their media stream
-         * before other things come on
+         * before other things come on.
+         * Rightfully, I should check if the connected user is a host here, to create the offer immediately. But since the backend
+         * sends a message immediately after connection, the logic of creating offer and answers should be handled by the on message event.
         */
         let mediaStream= await navigator.mediaDevices.getUserMedia({video:true, audio:true})//get user media stream and add it to vidEl
         localVid.srcObject =mediaStream// give the local vide element the incoming stream
@@ -40,55 +42,50 @@ function SignalServerAndVideoConn(){
         })
     }
 
-    socket.onmessage= async (e)=>{// when a message is detected, check whether it's an offer or an answer. Then, perform acts accordingly.
+    socket.onmessage= async (e)=>{
+        // A message is expected to be sent at initial connection to the websocket backend; therefore, check messages accordingly.
         let data= JSON.parse(e.data)
         let user= data.user
-        let isHost= data.host_status ? data.host_status : '' // as gotten from the websocket server on the backend 
+        let isHost= data.host_status ? data.host_status : '' // as gotten from the backend immediately at connection
         //deciding whether to create an answer or an offer.
-        if (isHost){ //the host being the caller
-            if(data.answer){
-                let remoteSession= new RTCSessionDescription(data.answer)
-                peerConn.setRemoteDescription(remoteSession)
-            }
-            // create offer if it's not an answer
-            let offer = await peerConn.createOffer()//create offer 
-            peerConn.setLocalDescription(offer)//set to local description
-            setTimeout(()=>socket.send(JSON.stringify({'offer': offer})), 1000)
+        if(isHost){
+            //create an offer if this is the host of the meeting
+            offer= await peerConn.createOffer()
+            peerConn.setLocalDescription(offer)//set local description and send offer to the room.
+            socket.send(JSON.stringify({offer:offer}))
         }
-        
-        // this person is the callee, not the host/caller.
+        // now check the contents of the message and respond accordingly
+        if (data.offer && !isHost){
+            //respond to this as the guest.
+            answer= await peerConn.createAnswer()
+            let remoteOffer= new RTCSessionDescription(data.offer)
+            await peerConn.setRemoteDescription(remoteOffer)
+            await peerConn.setLocalDescription(answer)
+            socket.send(JSON.stringify({answer:answer}))
+        }
+
+        else if (data.answer){
+            //now respond to this as the host, since you expect an answer from any user who wants to connect.
+            let remoteAnswer = new RTCSessionDescription(data.answer)
+            await peerConn.setRemoteDescription(remoteAnswer)
+        }
+        //now below, should handle other messages that are neither offers nor answers
         else{
-            //listening for the offer of the reomte peer.
-            if (data.offer){// an offer has been sent, then
-                let remoteOffer = new RTCSessionDescription(data.offer)
-                peerConn.setRemoteDescription(remoteOffer)
-                //first, get my own media streams, and then add them to the local video element
-                let answerStreams= await navigator.mediaDevices.getUSerMedia({video:true, audio:true})
-                localVid.srcObject= answerStreams
-                //now create my answer to the offer 
-                let answer= peerConn.createAnswer()
-                peerConn.setLocalDescription(answer)//set my answer as my local description
-                socket.send(JSON.stringify({'answer':answer}))//send my answer to the offerer
+            console.log(data)
+        }//All that my signaling server should handle for now.
 
-            }
-        }
-        //listen for other RTC events here
-        peerConn.onicecandidate= (e)=>{//ICE candidates (IP and PORTS combined)
-            socket.send(JSON.stringify())
-        }
-
-        peerConn.track= (e)=>{ //when remote tracks come in 
-            //create remote video and start adding the incoming media streams
-            let remoteVid= document.createElement('VIDEO')
+        //now onto several events from rtc
+        peerConn.ontrack= async (e)=>{
+            let remoteStreams= e.streams
+            //when remote streams start comming in, create video element and start adding the streams to it for the remote user
+            remoteVid= document.createElement('VIDEO')
             remoteVid.id= 'remote-vid'
-            remoteVid.autoplay= true
-            let remoteTracks= e.streams
-            remoteVid.srcObject= remoteTracks
+            remoteVid.srcObject= remoteStreams
         }
     }
 
     socket.onclose= (e)=>{
-        vidDisplayContainer.removeChild(vidEl)
+        vidDisplayContainer.removeChild(localVid)
     }
 
 }

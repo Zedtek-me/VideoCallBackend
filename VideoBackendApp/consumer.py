@@ -10,18 +10,17 @@ class UserSignal(AsyncWebsocketConsumer):
         await self.send(json.dumps({'user':user.username, 'host_status': user.is_host}))#send name of the user to the frontend for awareness and processing.
         # await self.channel_layer.group_add('Peers', self.channel_name)
 
-    async def group_recv(self, text_data):#meant to broadcast among peers
+    async def receive(self, text_data):#meant to broadcast among peers
         json_data= json.loads(text_data)
         await self.channel_layer.group_send('Peers', {
             'type' :'user.rcv',
-            'offer' if json_data.get('offer') else "answer":json_data.get('offer') if json_data.get('offer') else json_data.get('answer'), #used ternary operator to get the response from backend for offer/answer.
             'user' : await self.scope.get('user'),
             'message' : json_data,
         })
     
     async def user_rcv(self, event):#receive events from group broadcast, and send it back to the actual client, in its own tcp scope.
         print(event, json.loads(event))
-        await self.send(text_data= json.dumps(event.get('offer') if event.get('offer') else event.get('answer'), event.get('message')))#sends the message sent to the group, to a user
+        await self.send(text_data= json.dumps({'message': event.get('message')}))#sends the message sent to the group, back to the user
 
 
     async def disconnet(self):
