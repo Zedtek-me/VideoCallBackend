@@ -54,9 +54,15 @@ function SignalServerAndVideoConn(){
             peerConn.setLocalDescription(offer)//set local description and send offer to the room.
             socket.send(JSON.stringify({offer:offer}))
         }
+
+
         // now check the contents of the message and respond accordingly
-        if (data.offer && !isHost){
+        if (data.offer){
             //respond to this as the guest.
+            remoteVid= document.createElement('VIDEO')
+            remoteVid.id= 'remote-vid'
+            vidDisplayContainer.appendChild(remoteVid)//video element created, and added to the meeting video cont..
+            //now onto answer
             answer= await peerConn.createAnswer()
             let remoteOffer= new RTCSessionDescription(data.offer)
             await peerConn.setRemoteDescription(remoteOffer)
@@ -77,9 +83,7 @@ function SignalServerAndVideoConn(){
         //now onto several events from rtc
         peerConn.ontrack= async (e)=>{
             let remoteStreams= e.streams
-            //when remote streams start comming in, create video element and start adding the streams to it for the remote user
-            remoteVid= document.createElement('VIDEO')
-            remoteVid.id= 'remote-vid'
+            //when remote streams start comming in, start adding the streams to it for the remote user
             remoteVid.srcObject= remoteStreams
         }
     }
