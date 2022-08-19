@@ -54,7 +54,12 @@ function SignalServerAndVideoConn(){
             peerConn.setLocalDescription(offer)//set local description and send offer to the room.
             socket.send(JSON.stringify({offer:offer}))
         }
-
+        else{
+            //provide an answer to the existing offer, since youre just joining the room, and your initail event would not contain any offer
+            pendingOffer= new RTCSessionDescription(offer)
+            await peerConn.setRemoteDescription(pendingOffer)
+            let answerForGuestJustJoining= await peerConn.createAnswer()
+        }
 
         // now check the contents of the message and respond accordingly
         if (data.offer){
