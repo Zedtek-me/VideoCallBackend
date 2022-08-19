@@ -18,7 +18,7 @@ export const handleSideMeetingClicks= ()=>{
             //checks what type of action is requested(delete, join, or start)
             let meetingId=meetingIdz[i].value
             if(e.target.name === 'delete-meeting'){//delete
-               fetch(`http://localhost:9000/delete/`, {
+               fetch(`${window.location.host}/delete/`, {
                 method: 'POST',
                 body: JSON.stringify(meetingId),
                 headers:{
@@ -93,7 +93,7 @@ export const handleSideMeetingClicks= ()=>{
                     body: JSON.stringify(meetingId),
                     headers:{
                         'content-type': 'application/json',
-                        'X-CSRFTOKEN': csrf,
+                        'X-CSRFToken': csrf,
                     }
                    })
                 .then((resp)=>resp.json())
